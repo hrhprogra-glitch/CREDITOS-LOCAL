@@ -1,0 +1,636 @@
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" *ngIf="lisCuadernoCobranza.length > 0">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+                            {{lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC}} -
+                            {{lisCuadernoCobranza[0].JSON_CREDITOS[0].VIG_CC}}
+                        </h3>
+                        <i class="fas fa-search" style="margin-left: 12px" data-toggle="modal"
+                            data-target="#mBuscarCuadernosCobranzaDE"></i>
+                        <span style="margin-left: 12px"></span>
+                        <span class="badge badge-success classSemanasAnteriores" style="margin-left: 5px"
+                            *ngFor="let cuante of lisCuadernoCobranza[0].JSON_LISTACO_ANT" [ngClass]="cuante.CLASS_CUCO"
+                            (click)="onClickBuscarCuadernoCobranzaDEPorCodigoAccesoDirecto(cuante.COD_CUCO,cuante.SEM)">{{cuante.SEM}}</span>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+                        <table id="tCuadernoCobranzaCobrador" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead style="font-size: 12px;">
+                                <tr>
+                                    <th>{{lisCuadernoCobranza[0].JSON_HEADER[0].F}}</th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[3].F}}
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[4].F}}
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[5].F}}
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[6].F}}
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[7].F}}
+                                    </th>
+                                    <th class="classCentrarfinal " colspan="2">
+                                        {{lisCuadernoCobranza[0].JSON_HEADER[8].F}}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="fontBold"></th>
+                                    <th class="fontBold">F. E.</th>
+                                    <th class="fontBold">F. V.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                    <th class="classCentrarfinal fontBold">DEP.</th>
+                                    <th class="classCentrarfinal fontBold">EFEC.</th>
+                                </tr>
+
+                            </thead>
+                            <tbody style="font-size: 12px;">
+
+                                <tr *ngFor="let cuaderno of lisCuadernoCobranza[0].JSON_CREDITOS let i = index">
+                                    <td>
+
+                                        <a
+                                            [routerLink]="['/pages/cuadernocobranzahistorial',cuaderno.COD_CR,3,cuaderno.COD_PC]">{{cuaderno.CLI}}
+                                        </a>
+                                        <span>({{cuaderno.MONT_CU}})</span>
+                                        <span style="font-style: italic; color: #e76407; font-weight: 600;">
+                                            {{cuaderno.NOTA}}
+                                        </span>
+
+                                    </td>
+                                    <td>
+                                        <a class="montoCuota"
+                                            (click)="onClickEliminarRegistroCobranza('100',cuaderno.COD_CUA, cuaderno.COD_CLI, cuaderno.COD_PC, cuaderno.COD_CR, cuaderno.CLI)">{{cuaderno.FE_EC}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{cuaderno.FE_VEN}}
+                                        <ng-template [ngIf]="cuaderno.EST_CR == 3" [ngIfElse]="otroestado">
+                                            <span style="color: green; font-weight: bold; font-size: 11px;">
+                                                LIQUIDADO</span>
+                                        </ng-template>
+                                        <ng-template #otroestado>
+                                            <ng-template [ngIf]="cuaderno.EST_CR == 4" [ngIfElse]="estadovencio">
+                                                <span style="color:#0fcaf5; font-weight: bold; font-size: 11px;">
+                                                    REFINAN.</span>
+                                            </ng-template>
+                                            <ng-template #estadovencio>
+                                                <ng-template [ngIf]="cuaderno.FE_VENF == 1" [ngIfElse]="vigente">
+                                                    <span style="color: red; font-weight: bold; font-size: 11px;">
+                                                        VENCIÓ</span>
+                                                </ng-template>
+                                                <ng-template #vigente>
+                                                    <span style="color: #0337f5; font-weight: bold; font-size: 11px;">
+                                                        VIGENTE</span>
+                                                </ng-template>
+                                            </ng-template>
+
+
+                                        </ng-template>
+                                    </td>
+                                    <td style="background-color: #bcddf7"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.L_D != 0" [ngIfElse]="montocero11">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto11{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[3].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.L_D,1,11,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.L_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero11>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto11{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[3].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.L_D,1,11,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCL == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NLD != '-'" [ngIfElse]="sinnotas11">
+                                                <span id="spanNota11{{cuaderno.COD_CR}}"> {{cuaderno.NLD}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas11>
+                                                <span id="spanNota11{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+
+
+                                    </td>
+                                    <td style="background-color: #bcddf7"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.L_E != 0" [ngIfElse]="montocero12">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto12{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[3].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.L_E,1,12,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.L_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero12>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto12{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[3].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.L_E,1,12,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NLE != '-'" [ngIfElse]="sinnotas12">
+                                            <span id="spanNota12{{cuaderno.COD_CR}}"> {{cuaderno.NLE}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas12>
+                                            <span id="spanNota12{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #ffda7b"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.M_D != 0" [ngIfElse]="montocero21">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto21{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[4].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.M_D, 2,21,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.M_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero21>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto21{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[4].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.M_D, 2,21,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCM == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NMD != '-'" [ngIfElse]="sinnotas21">
+                                                <span id="spanNota21{{cuaderno.COD_CR}}"> {{cuaderno.NMD}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas21>
+                                                <span id="spanNota21{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+
+
+                                    </td>
+                                    <td style="background-color: #ffda7b"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.M_E != 0" [ngIfElse]="montocero22">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto22{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[4].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.M_E, 2,22,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.M_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero22>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto22{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[4].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.M_E, 2,22,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NME != '-'" [ngIfElse]="sinnotas22">
+                                            <span id="spanNota22{{cuaderno.COD_CR}}"> {{cuaderno.NME}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas22>
+                                            <span id="spanNota22{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #c6ffb2"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.MI_D != 0" [ngIfElse]="montocero31">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto31{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[5].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.MI_D, 3,31,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.MI_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero31>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto31{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[5].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.MI_D, 3,31,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCMI == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NMID != '-'" [ngIfElse]="sinnotas31">
+                                                <span id="spanNota31{{cuaderno.COD_CR}}"> {{cuaderno.NMID}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas31>
+                                                <span id="spanNota31{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #c6ffb2"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.MI_E != 0" [ngIfElse]="montocero32">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto32{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[5].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.MI_E, 3,32,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.MI_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero32>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto32{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[5].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.MI_E, 3,32,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NMIE != '-'" [ngIfElse]="sinnotas32">
+                                            <span id="spanNota32{{cuaderno.COD_CR}}"> {{cuaderno.NMIE}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas32>
+                                            <span id="spanNota32{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #b3edf1"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.J_D != 0" [ngIfElse]="montocero41">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto41{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[6].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.J_D, 4,41,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.J_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero41>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto41{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[6].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.J_D, 4,41,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCJ == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NJD != '-'" [ngIfElse]="sinnotas41">
+                                                <span id="spanNota41{{cuaderno.COD_CR}}"> {{cuaderno.NJD}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas41>
+                                                <span id="spanNota41{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #b3edf1"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.J_E != 0" [ngIfElse]="montocero42">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto42{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[6].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.J_E, 4,42,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.J_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero42>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto42{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[6].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.J_E, 4,42,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NJE != '-'" [ngIfElse]="sinnotas42">
+                                            <span id="spanNota42{{cuaderno.COD_CR}}"> {{cuaderno.NJE}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas42>
+                                            <span id="spanNota42{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #e9d6f3"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.V_D != 0" [ngIfElse]="montocero51">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto51{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[7].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.V_D, 5,51,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.V_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero51>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto51{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[7].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.V_D, 5,51,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCV == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NVD != '-'" [ngIfElse]="sinnotas51">
+                                                <span id="spanNota51{{cuaderno.COD_CR}}"> {{cuaderno.NVD}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas51>
+                                                <span id="spanNota51{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+
+
+                                    </td>
+                                    <td style="background-color: #e9d6f3"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.V_E != 0" [ngIfElse]="montocero52">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto52{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[7].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.V_E, 5,52,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.V_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero52>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto52{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[7].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.V_E, 5,52,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NVE != '-'" [ngIfElse]="sinnotas52">
+                                            <span id="spanNota52{{cuaderno.COD_CR}}"> {{cuaderno.NVE}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas52>
+                                            <span id="spanNota52{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                    <td style="background-color: #f3e699"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.S_D != 0" [ngIfElse]="montocero61">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto61{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[8].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.S_D, 6,61,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.S_D}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero61>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto61{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[8].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Deposito',cuaderno.S_D, 6,61,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.DCS == 1 " [ngIfElse]="nodiacobro">
+                                            <span class="f42ef7"> COBRAR</span>
+                                        </ng-template>
+                                        <ng-template #nodiacobro>
+                                            <ng-template [ngIf]="cuaderno.NSD != '-'" [ngIfElse]="sinnotas61">
+                                                <span id="spanNota61{{cuaderno.COD_CR}}"> {{cuaderno.NSD}}</span>
+                                            </ng-template>
+                                            <ng-template #sinnotas61>
+                                                <span id="spanNota61{{cuaderno.COD_CR}}"></span>
+                                            </ng-template>
+                                        </ng-template>
+
+
+
+                                    </td>
+                                    <td style="background-color: #f3e699"
+                                        class="classCentrarfinal fontBold BorderTable">
+
+                                        <ng-template [ngIf]="cuaderno.S_E != 0" [ngIfElse]="montocero62">
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto62{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[8].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.S_E, 6,62,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">{{cuaderno.S_E}}
+                                            </a>
+                                        </ng-template>
+                                        <ng-template #montocero62>
+                                            <a href="#mIngresarCobranza" data-toggle="modal"
+                                                data-target="#mIngresarCobranza" id="aMonto62{{cuaderno.COD_CR}}"
+                                                (click)="onClickIngresarCobranza(lisCuadernoCobranza[0].JSON_HEADER[8].F,lisCuadernoCobranza[0].JSON_CREDITOS[0].NOM_PC,cuaderno.CLI,'Efectivo',cuaderno.S_E, 6,62,cuaderno.COD_CUA,cuaderno.COD_CR, cuaderno.COD_CLI, cuaderno.COD_PC)">----
+                                            </a>
+                                        </ng-template>
+
+                                        <ng-template [ngIf]="cuaderno.NSE != '-'" [ngIfElse]="sinnotas62">
+                                            <span id="spanNota62{{cuaderno.COD_CR}}"> {{cuaderno.NSE}}</span>
+                                        </ng-template>
+                                        <ng-template #sinnotas62>
+                                            <span id="spanNota62{{cuaderno.COD_CR}}"></span>
+                                        </ng-template>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="font-size: 12px;">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_LUD}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_LUE}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_MAD}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_MAE}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_MID}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_MIE}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_JUD}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_JUE}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_VID}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_VIE}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_SAD}}
+                                    </th>
+                                    <th class="classCentrarfinal fontBold">{{lisCuadernoCobranza[0].SUM_TO[0].MON_SAE}}
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- /Modal Ingresar Cobranza -->
+    <div class="modal fade" id="mIngresarCobranza">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresar Cobranza</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModal>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Crédito:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input id="inputCodCredito" #inputCodCredito [value]="vgCodCre" disabled>
+                        </div>
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Día:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <span style="color: #953589;" id="spanDiaCobranza">{{vgDiaCobranza}}</span>
+                            <input class="nonone" id="inputAccion" #inputAccion [value]="vgAccion">
+                            <input class="nonone" id="inputAccionDE" #inputAccionDE [value]="vgAccionDE">
+                            <input class="nonone" id="inputCodCuaCo" #inputCodCuaCo [value]="vgCuaCo">
+                            <input class="nonone" id="inputCodPersonal" #inputCodPersonal [value]="vgCodPer">
+                            <input class="nonone" id="inputCodCliente" #inputCodCliente [value]="vgCodCli">
+                        </div>
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Personal:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <span style="color: blue;" id="spanEtiquetaPersonal">{{vgPersonalCobramza}}</span>
+                        </div>
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Cliente:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <span style="color: darkgreen;" id="spanEtiquetaCliente">{{vgCliente}}</span>
+                        </div>
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Mod:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <span style="color: #ef4b26;" id="spanEtiquetaCliente">{{vgTipoCobranza}}</span>
+                        </div>
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Monto:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="number" id="txtMontoPagarCuCoDE" placeholder="0.00" autocomplete="nope"
+                                name="txtMontoPagarCuCoDE" [value]="vgMontoCobranza" #txtMontoPagarCuCoDE>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer textAlingRigth">
+                    <button id="btnActualizarCredito" class="btn btn-primary"
+                        (click)="onclickActualizarCreditoClienteDepositoEfectivo(inputAccion.value, inputAccionDE.value, inputCodCuaCo.value, inputCodCliente.value, inputCodPersonal.value, inputCodCredito.value, txtMontoPagarCuCoDE.value)">Actualizar
+                        Cobranza</button>
+                </div>
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresar Notas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3 textAlingRigth">
+                            <span style="font-weight:bold">Notas:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="txtNotasCreditoDE" autocomplete="nope" name="txtNotasCreditoDE"
+                                #txtNotasCreditoDE>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer textAlingRigth">
+                    <button class="btn btn-warning"
+                        (click)="onclickActualizarNotasDepositoEfectivo(inputAccionDE.value, inputCodCuaCo.value, inputCodCliente.value, inputCodPersonal.value, inputCodCredito.value, txtNotasCreditoDE.value)">Actualizar
+                        Notas</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Modal Buscar Otros cuadernos de cobranza -->
+    <div class="modal fade" id="mBuscarCuadernosCobranzaDE">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Buscar Cuadernos de Cobranzas</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalCodigo>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span style="font-weight:bold">Buscar por fecha desde </span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control datetimepicker-input"
+                                id="dtFechaIniCuadernoCobranza">
+                        </div>
+                        <div class="col-md-1">
+                            <span style="font-weight:bold">Hasta</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control datetimepicker-input"
+                                id="dtFechaFinCuadernoCobranza">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-default"
+                                (click)="onClickBuscarCuadernoCobranzaPorFechaDE()">Buscar</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <table id="tCuadernoCobranzaHistorial" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Vigencia</th>
+                                    <th class="classCentrarfinal ">Estado</th>
+                                    <th class="classCentrarfinal ">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cuaderno of listarCuadernoCobranzaRangoFecha let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td><span class="classVencimientogaHistorial">{{cuaderno.FI}}</span> - <span
+                                            class="classVencimientogaHistorial">{{cuaderno.FF}}</span></td>
+                                    <td class="classCentrarfinal "><span
+                                            [ngClass]="cuaderno.EST_CLASS">{{cuaderno.EST}}</span></td>
+                                    <td class="classCentrarfinal "><i class="fas fa-eye"
+                                            style="font-size: 22px; color: #3d9548;"
+                                            (click)="onClickbuscarCuadernoCobranzaPorCodigoDE(cuaderno.COD_CC, cuaderno.FI, cuaderno.FF)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+<!-- /.content -->

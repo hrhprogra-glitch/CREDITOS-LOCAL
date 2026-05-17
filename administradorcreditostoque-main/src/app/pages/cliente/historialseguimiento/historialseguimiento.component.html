@@ -1,0 +1,43 @@
+<div class="row">
+
+  <div class="col-md-12">
+    Ingresar Seguimiento:
+    <ckeditor [editor]="Editor" [data]="EditorData" [config]="config" #Notascliente></ckeditor>
+  </div>
+</div>
+<br>
+<button class="btn btn-secondary" (click)="onClickRegistrarSeguimiento()">Guardar</button>
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- The time line -->
+    <div class="timeline">
+      <ng-template ngFor let-item [ngForOf]="vListarSeguimiento" let-i="index">
+        <!-- timeline time label -->
+        <div class="time-label">
+          <span style="color: #9aa7b3;">{{item.FECHA}}</span>
+        </div>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <div>
+          <i class="fas fa-comments bg-yellow"></i>
+          <div class="timeline-item">
+            <span class="time"><i class="fas fa-clock"></i> {{item.HORA}}</span>
+            <h3 class="timeline-header"><a>{{item.USU}}</a> escribió el seguimiento</h3>
+
+            <div class="timeline-body" [innerHTML]="item.NOTA">
+            </div>
+            <div class="timeline-footer">
+              <img src="./assets/imagenes/eliminar.png" class="classTamanioIcono" style="margin-left: 98%"
+                (click)="onClickEliminarSeguimiento(item.COD_CLI_S)">
+            </div>
+          </div>
+        </div>
+        <!-- END timeline item -->
+      </ng-template>
+
+    </div>
+  </div>
+  <!-- /.col -->
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
+edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAE5J5UC0E+kuJ1Epv/t09kwAAAAACAAAAAAAQZgAAAAEAACAAAACfBEvoLJH4Fd6Xa6gfueFwXdaYGJ3GyalRufhnyd1ggQAAAAAOgAAAAAIAACAAAACOlzKXeTZOcTkL4XR9swCHdm8k31BqHYwjJnPJgVJqd4AAAAB75yn6BUsXdwYaNXcOjfmltiaF9rm0vowQoRgCaWAdQ0hdZsvvDl+1XPOSKm4tCEgcoG/bQkwpVc4HaSSOojRRuJ7hXmgO4VCBD9fxlsO1aPk6FVFEXiuSnys06vTzMiqWNwYGp1T1Qc8jAm2xBqZIOObq0k+ISNbctOPjCFWCQ0AAAACsCSXAYag8Rx3pak5OmuA+tEMCuHUt1TdSUw9PYVRfFSH0gQB2Ch+X0/7mBQTXosDQZgqOtrqkxduMny2Qi9hA</EncryptedPassword>
+    <_PublishTargetUrl>C:\Users\MARJORIE\Desktop\API CREDITOALTOQIE</_PublishTargetUrl>
+    <History>True|2023-07-26T04:16:30.1930430Z;True|2023-07-25T22:52:49.1045046-05:00;True|2023-07-10T22:00:56.9111598-05:00;True|2023-01-27T10:30:09.8820592-05:00;True|2022-09-07T23:03:21.8445713-05:00;True|2022-09-05T21:49:10.0422683-05:00;True|2022-08-31T22:05:07.6120891-05:00;True|2022-02-02T21:33:14.1140635-05:00;True|2022-01-30T00:11:38.8452865-05:00;True|2022-01-28T22:26:38.9792279-05:00;True|2022-01-28T21:56:01.7938585-05:00;True|2022-01-28T21:05:11.3313008-05:00;True|2022-01-26T21:08:43.7333087-05:00;True|2022-01-24T23:12:55.3903741-05:00;True|2022-01-24T23:12:29.7207659-05:00;True|2022-01-24T22:02:26.4861611-05:00;True|2022-01-24T13:21:08.3296456-05:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

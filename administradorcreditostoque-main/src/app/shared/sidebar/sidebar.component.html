@@ -1,0 +1,60 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4 classcolorMenu">
+  <!-- Brand Logo -->
+  <a class="brand-link clasColorlinea">
+    <img src="./assets/imagenes/dollar.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light">Créditos al Toque</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex clasColorlinea">
+      <div class="image">
+        <img src="./assets/imagenes/woman.png" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a class="d-block">{{seguridadServicio.menu[0].DP}}</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+        <li class="nav-header">MENU</li>
+        <li class="nav-item" *ngFor="let menu of seguridadServicio.menu[0].JSON_ACCESOS">
+          <a class="nav-link" href="#">
+            <i class="nav-icon nav-icon fas fa-book"></i>
+            <p>
+              {{menu.DA1}}
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" *ngFor="let submenu of menu.JSON_ACCESOS2">
+            <li class="nav-item">
+              
+              <ng-template [ngIf]="submenu.COD_PER > 0" [ngIfElse]="elsemenu">
+                <a class="nav-link" [routerLink]="[submenu.UA2,submenu.COD_PER]">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{submenu.DA2}}</p>
+                </a>
+              </ng-template>
+              <ng-template #elsemenu>
+                <a class="nav-link" [routerLink]="submenu.UA2">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{submenu.DA2}}</p>
+                </a>
+              </ng-template>
+
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,353 @@
+<app-loader [vVisualizarLoader]="vLoader"></app-loader>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Listado de Cobranzas</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Cuaderno</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12" id="divCuadernoCobranza" *ngIf="lisCuadernoCobranza.length > 0">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+              {{vigenciaCuadernoCobranza}}</h3>
+            <i class="fas fa-search" style="margin-left: 12px" data-toggle="modal"
+              data-target="#mBuscarCuadernosCobranza"></i>
+            <i class="fas fa-arrow-alt-circle-down" style="margin-left: 12px" (click)="openPDFCuadernoCobranza()"></i>
+            <!--<i class="fas fa-sync-alt" style="margin-left: 12px" (click)="actualizarFechasPendientesCreditos()"></i>-->
+            <span style="margin-left: 12px"></span>
+            <span class="badge badge-success classSemanasAnteriores" style="margin-left: 5px"
+              *ngFor="let cuante of lisCuadernoCobranza[0].JSON_LISTACO_ANT" [ngClass]="cuante.CLASS_CUCO"
+              (click)="onClickBuscarCuadernoCobranzaPorCodigoAccesoDirecto(cuante.COD_CUCO)">{{cuante.SEM}}</span>
+
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="tCuadernoCobranza" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+              class="table table-bordered table-striped row-border hover">
+              <thead style="font-size: 14px;">
+                <tr *ngIf="lisCuadernoCobranza.length > 0">
+                  <th>{{lisCuadernoCobranza[0].JSON_HEADER[0].F}}</th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[1].F}}
+                  </th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[2].F}}
+                  </th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[3].F}}
+                  </th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[4].F}}
+                  </th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[5].F}}
+                  </th>
+                  <th class="classCentrarfinal ">{{lisCuadernoCobranza[0].JSON_HEADER[6].F}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody style="font-size: 13px;">
+                <tr *ngFor="let cuaderno of lisCuadernoCobranza[0].JSON_CREDITOS let i = index">
+                  <td><a [routerLink]="['/pages/cuadernocobranzahistorial',cuaderno.COD_CR,2,0]">{{cuaderno.CLI}}
+                    </a><br>
+                    <span>{{cuaderno.FE_CRE}}</span> - <span>{{cuaderno.MONT_CU}}</span> <span
+                      style="font-style: italic; color: #e76407; font-weight: 600;"> {{cuaderno.NOTA}}</span><br>
+
+                    <ng-template [ngIf]="cuaderno.EST_CR == 3" [ngIfElse]="otroestado">
+                      <span>{{cuaderno.FE_VEN}}</span><span style="color: green; font-weight: 600;"> LIQUIDADO</span>
+                    </ng-template>
+                    <ng-template #otroestado>
+                      <ng-template [ngIf]="cuaderno.FE_VENF == 1" [ngIfElse]="vigente">
+                        <span>{{cuaderno.FE_VEN}}</span><span style="color: red; font-weight: 600;"> VENCIÓ</span>
+                      </ng-template>
+                      <ng-template #vigente>
+                        <span>{{cuaderno.FE_VEN}}</span><span style="color: #0337f5; font-weight: 600;"> VIGENTE</span>
+                      </ng-template>
+
+                      <ng-template [ngIf]="cuaderno.EST_CR == 4">
+                        <span style="color:#0fcaf5; font-weight: 600;"> REFINAN.</span>
+                      </ng-template>
+                    </ng-template>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_LU[0].CLASS_DC, cuaderno.PERSONAL_LIST_LU[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_LU"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="1" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[1].F)">{{personal.M_DIA}}</button>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_MA[0].CLASS_DC, cuaderno.PERSONAL_LIST_MA[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_MA"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="2" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[2].F)">{{personal.M_DIA}}</button>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_MI[0].CLASS_DC, cuaderno.PERSONAL_LIST_MI[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_MI"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="3" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[3].F)">{{personal.M_DIA}}</button>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_JU[0].CLASS_DC, cuaderno.PERSONAL_LIST_JU[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_JU"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="4" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[4].F)">{{personal.M_DIA}}</button>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_VI[0].CLASS_DC, cuaderno.PERSONAL_LIST_VI[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_VI"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="5" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[5].F)">{{personal.M_DIA}}</button>
+                  </td>
+                  <td class="classCentrarfinal"
+                    [ngClass]="[cuaderno.PERSONAL_LIST_SA[0].CLASS_DC, cuaderno.PERSONAL_LIST_SA[0].CLASS_DV]"><button
+                      data-toggle="modal" data-target="#modal-sm" [disabled]="personal.BUTT_BLO==0"
+                      class="btn btn-primary classTamanioButton" *ngFor="let personal of cuaderno.PERSONAL_LIST_SA"
+                      [ngClass]="personal.CLASS" [attr.data-accion]="6" [attr.data-nomcli]="cuaderno.CLI"
+                      [attr.data-nomper]="personal.NOM_PER" [attr.data-codcre]="cuaderno.COD_CR"
+                      [attr.data-codcli]="cuaderno.COD_CLI" [attr.data-codpersoco]="personal.COD_PER"
+                      [attr.data-codcuaco]="cuaderno.COD_CUA" [attr.data-modifmonto]="personal.MOD_MONTO"
+                      (click)="onclickModalActualizarCredito($event, lisCuadernoCobranza[0].JSON_HEADER[6].F)">{{personal.M_DIA}}</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot *ngIf="lisCuadernoCobranza.length > 0">
+                <tr>
+                  <th>Totales</th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TLU"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,1, lisCuadernoCobranza[0].JSON_HEADER[1].F)"></i>
+                  </th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TMA"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,2, lisCuadernoCobranza[0].JSON_HEADER[2].F)"></i>
+                  </th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TMI"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,3, lisCuadernoCobranza[0].JSON_HEADER[3].F)"></i>
+                  </th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TJU"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,4, lisCuadernoCobranza[0].JSON_HEADER[4].F)"></i>
+                  </th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TVI"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,5, lisCuadernoCobranza[0].JSON_HEADER[5].F)"></i>
+                  </th>
+                  <th class="classCentrarfinal "><button style="font-weight: bold;"
+                      class="btn btn-primary classTamanioButton" *ngFor="let totales of lisCuadernoCobranza[0].SUM_TSA"
+                      [ngClass]="totales.CLASS">{{totales.MON_T}}</button>
+                    <br> <i class="fas fa-tags" style="margin-left: 12px" data-toggle="modal"
+                      data-target="#mNotasCuadernoCobranza"
+                      (click)="onClickModalNotasCuadernoCobranza(lisCuadernoCobranza[0].JSON_CREDITOS[0].COD_CUA,6, lisCuadernoCobranza[0].JSON_HEADER[6].F)"></i>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- /Modal Listar Creditos -->
+  <div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Actualizar Crédito</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModal>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <span style="font-weight:bold">Día:</span>
+            </div>
+            <div class="col-md-9">
+              <span style="color: #953589;" id="spanDiaCobranza">{{spanNotasDiaCobranza}}</span>
+            </div>
+            <div class="col-md-3">
+              <span style="font-weight:bold">Personal:</span>
+            </div>
+            <div class="col-md-9">
+              <span style="color: blue;" id="spanEtiquetaPersonal">-</span>
+            </div>
+            <div class="col-md-3">
+              <span style="font-weight:bold">Cliente:</span>
+            </div>
+            <div class="col-md-9">
+              <span style="color: darkgreen;" id="spanEtiquetaCliente">-</span>
+            </div>
+            <div class="col-md-3">
+              <span style="font-weight:bold">Monto:</span>
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="txtMontoPagarCuCo" placeholder="0.00" autocomplete="nope"
+                name="txtMontoPagarCuCo">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button id="btnActualizarCredito" (click)="onclickActualizarCreditoCliente($event)" class="btn btn-primary"
+            [attr.data-accion]="0" [attr.data-codcre]="0" [attr.data-codcli]="0" [attr.data-codpersoco]="0"
+            [attr.data-codcuaco]="0" [attr.data-modifmonto]="0" [disabled]="vBloquearBoton==true">Guardar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal fade" id="mBuscarCuadernosCobranza">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Buscar Cuadernos de Cobranzas</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalCodigo>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <span style="font-weight:bold">Buscar por fecha desde </span>
+            </div>
+            <div class="col-md-3">
+              <input type="date" class="form-control datetimepicker-input" id="dtFechaIniCuadernoCobranza">
+            </div>
+            <div class="col-md-1">
+              <span style="font-weight:bold">Hasta</span>
+            </div>
+            <div class="col-md-3">
+              <input type="date" class="form-control datetimepicker-input" id="dtFechaFinCuadernoCobranza">
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-default"
+                (click)="onClickBuscarCuadernoCobranzaPorFecha()">Buscar</button>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <table id="tCuadernoCobranzaHistorial" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>Vigencia</th>
+                  <th class="classCentrarfinal ">Estado</th>
+                  <th class="classCentrarfinal ">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cuaderno of listarCuadernoCobranzaRangoFecha let i = index">
+                  <td>{{i+1}}</td>
+                  <td><span class="classVencimientogaHistorial">{{cuaderno.FI}}</span> - <span
+                      class="classVencimientogaHistorial">{{cuaderno.FF}}</span></td>
+                  <td class="classCentrarfinal "><span [ngClass]="cuaderno.EST_CLASS">{{cuaderno.EST}}</span></td>
+                  <td class="classCentrarfinal "><i class="fas fa-eye" style="font-size: 22px; color: #3d9548;"
+                      [attr.data-codcodico]="cuaderno.COD_CC"
+                      (click)="onClickbuscarCuadernoCobranzaPorCodigo($event)"></i> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal fade" id="mNotasCuadernoCobranza">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Añadir Notas - Listado Cobranza</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalNotas>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">
+              <span style="font-weight:bold">Notas del Día: </span>
+            </div>
+            <div class="col-md-10">
+              <span id="spanNotasDiaCobranza" style="color: blue;">{{spanNotasDiaCobranza}}</span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <ckeditor [editor]="Editor" [data]="EditorData" [config]="config" #NotasListadoCobranza></ckeditor>
+            </div>
+          </div>
+          <br>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button id="btnActualizarNotasListadoCobranza" class="btn btn-primary" [disabled]="vBloquearBoton==true"
+            [attr.data-codcuadcobran]="0" [attr.data-diacobranza]="0"
+            (click)="onclickGuardarNotasCreditoCliente($event)">Guardar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+</section>
+<!-- /.content -->

@@ -1,0 +1,106 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="titulomodulo">Lista de Cierres Diarios</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a>Home</a></li>
+          <li class="breadcrumb-item active">Cierre Diario</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body">
+            <button type="submit" class="btn btn-info" routerLink="/pages/cierrediario">Nuevo Cierre</button>
+            <table id="tdClientes" class="table table-bordered table-striped" datatable [dtOptions]="dtOptionsCD"
+              [dtTrigger]="dtTriggerCD">
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Fecha Cierre</th>
+                  <th>Total Oficina</th>
+                  <th>Total Efectivo</th>
+                  <th>Total Gastos</th>
+                  <th>Total Cierre</th>
+                  <th>Estado</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+              </thead>
+              <tbody style="font-size: 14px;">
+                <tr *ngFor="let cd of vgListaCierreDiario let i = index">
+                  <td>{{cd.COD}}</td>
+                  <td>{{cd.FC}}</td>
+                  <td><img src="./assets/imagenes/pago-en-efectivo.png" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cd.TO}}
+                  </td>
+                  <td><img src="./assets/imagenes/dinero.png" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cd.TLC}}
+                  </td>
+                  <td><img src="./assets/imagenes/dinero-en-gasto.png" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cd.TG}}
+                  </td>
+                  <td><img src="./assets/imagenes/efectivo.png" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cd.TCD}}
+                  </td>
+                  <td>
+                    <ng-template [ngIf]="cd.EST == 1">
+                      <span ng-reflect-ng-class="classSpanEstadoLiqui" class="classSpanEstadoLiqui">GENERADO</span>
+                    </ng-template>
+
+                    <ng-template [ngIf]="cd.EST == 2">
+                      <span ng-reflect-ng-class="classSpanEstadoPen" class="classSpanEstadoPen">ANULADO</span>
+                    </ng-template>
+
+                  </td>
+                  <td class="classCentrarfinal">
+                    <a [routerLink]="['/pages/actualizarcierrediario',cd.COD]">
+                      <img src="./assets/imagenes/escritura.png" class="classTamanioIcono">
+                    </a>
+                   
+                    <ng-template [ngIf]="cd.EST == 1">
+                      <a (click)="onClickAnularcierre(cd.COD, cd.FC)">
+                        <img src="./assets/imagenes/prohibido.svg" class="classTamanioIcono">
+                      </a>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Fecha Cierre</th>
+                  <th>Total Oficina</th>
+                  <th>Total Efectivo</th>
+                  <th>Total Gastos</th>
+                  <th>Total Cierre</th>
+                  <th>Estado</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

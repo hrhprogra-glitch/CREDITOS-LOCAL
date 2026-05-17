@@ -1,0 +1,211 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="titulomodulo">Actualizar Cierre Diario ({{vgFechacierre}})</h1>
+
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Cierre Diario</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- SELECT2 EXAMPLE -->
+<div class="card card-default">
+    <div class="card-body" *ngIf="vgCierrediario.length > 0">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">1</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Fecha de Cierre</h5>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="font-weight500">Fecha de Cierre</label>
+                    <input type="date" class="form-control datetimepicker-input" id="idFechacierrediario"
+                        #idFechacierrediario disabled [value]="vgFechacierre">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="font-weight500">Estado</label><br>
+                    <ng-template [ngIf]="vgCierrediario[0].EST == 1">
+                        <span ng-reflect-ng-class="classSpanEstadoLiqui" class="classSpanEstadoLiqui">GENERADO</span>
+                    </ng-template>
+        
+                    <ng-template [ngIf]="vgCierrediario[0].EST == 2">
+                        <span ng-reflect-ng-class="classSpanEstadoPen" class="classSpanEstadoPen">ANULADO</span>
+                    </ng-template>
+                </div>
+            </div>
+            
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">2</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Cobranzas de Oficina</h5>
+            </div>
+
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Monto</th>
+                            <th>¿Quién recibió?</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ro of vgResumenOficina let i = index">
+                            <td>{{ro.CLI}}</td>
+                            <td style="color: #007bff; font-weight: 600">{{ro.MON}}</td>
+                            <td>{{ro.QR}}</td>
+                            <td>{{ro.OBS}}</td>
+                        </tr>
+
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Total Cobranza Oficina</th>
+                        <th colspan="3">{{vgCierrediario[0].JSON_TO[0].TO}}</th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">3</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen de Pagos según lista de cobranza</h5>
+            </div>
+
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline">
+                    <thead>
+                        <tr>
+                            <th>Lista de Cobranza</th>
+                            <th>Efectivo</th>
+                            <th>Deposito</th>
+                            <th>Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let rlc of vgResumenlistacobranza let i = index">
+                            <td>{{rlc.DESC}}</td>
+                            <td style="color: #007bff; font-weight: 600">{{rlc.MONTE}}</td>
+                            <td style="color: #007bff; font-weight: 600">{{rlc.MONTD}}</td>
+                            <td style="color: #007bff; font-weight: 600">{{rlc.ST}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Totales</th>
+                        <th>{{vgCierrediario[0].JSON_TLC[0].TE}}</th>
+                        <th>{{vgCierrediario[0].JSON_TLC[0].TD}}</th>
+                        <th>{{vgCierrediario[0].JSON_TLC[0].ST}}</th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">4</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen de Gatos</h5>
+            </div>
+
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline">
+                    <thead>
+                        <tr>
+                            <th>Descripción Gastos</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let rg of vgResumenGastos let i = index">
+                            <td>{{rg.DESC}}</td>
+                            <td style="color: #007bff; font-weight: 600">{{rg.MON}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Total Gastos</th>
+                        <th>{{vgCierrediario[0].JSON_TG[0].TG}}</th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">5</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen Total</h5>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>T. Oficina</label>
+                    <input class="form-control" [value]="vgCierrediario[0].TO" disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #f3f56e">
+                </div>
+
+            </div>
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">+</label>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Total Efectivo</label>
+                    <input class="form-control" disabled [value]="vgCierrediario[0].TLC"
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #75dcf3">
+                </div>
+
+            </div>
+
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">-</label>
+            </div>
+
+            <div class="col-md-2">
+
+                <div class="form-group">
+                    <label>Total Gastos</label>
+                    <input class="form-control" disabled [value]="vgCierrediario[0].TG"
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #ff00008a">
+                </div>
+
+            </div>
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">=</label>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>-</label>
+                    <input class="form-control" [value]="vgCierrediario[0].TCD" id="txttotalcierrediario"
+                        #txttotalcierrediario disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #82f982">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <button type="button" class="btn btn-default" routerLink="/pages/listarcierrediario">Cancelar</button>
+
+    </div>
+</div>
+<!-- /.card -->

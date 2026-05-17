@@ -1,0 +1,306 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="titulomodulo">Actualizar Cliente</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="#">Home</a></li>
+					<li class="breadcrumb-item active">Cliente</li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+<!-- SELECT2 EXAMPLE -->
+<div class="card card-default">
+	<!-- /.card-header -->
+	<div class="card-body" >
+		<div class="row">
+			<div class="col-md-12">
+				<span class="float-left badge bg-danger tituloNumeroCredito">1</span>
+				<h5 class="tituloSeccionCredito">&nbsp; Información del Cliente</h5>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Tipo Cliente</label>
+					<select class="form-control" id="cboTipoClienteUpd" disabled>
+						<option *ngFor="let tipocliente of listarTipoClienteUpd"
+							[selected]="tipocliente.CTC == CodTipoCliente" [attr.data-prs]="tipocliente.PRS"
+							[attr.data-pna]="tipocliente.PNA" [value]="tipocliente.CTC">
+							{{tipocliente.DESCTC}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Tipo de Documento </label>
+					<select class="form-control" id="cboTipoDocuClienteUpd">
+						<option *ngFor="let tipodoccli of listarTipoDocClienteUpd"
+							[selected]="tipodoccli.CODTDC == CodTipoDoc" [value]="tipodoccli.CODTDC"
+							[attr.data-ltdc]="tipodoccli.LTDC" [attr.data-ertdc]="tipodoccli.ERTDC">
+							{{tipodoccli.DESCTDC}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Documento de Identidad</label>
+					<input type="text" class="form-control" id="txtDNIClienteUpd"
+						[value]="listarInformacionCliente.DOCCLI" placeholder="Ingrese nombres y apellidos"
+						autocomplete="nope" name="txtDNIClienteUpd" maxlength="20">
+				</div>
+			</div>
+
+			<div class="col-md-6 nonone" id="divRasonSocialUpd">
+				<div class="form-group">
+					<label>Razón Social</label>
+					<input type="text" class="form-control" id="txtRasonSocialCliUpd"
+						[value]="listarInformacionCliente.CLI" placeholder="Ingrese Razon Social" autocomplete="nope"
+						maxlength="150">
+				</div>
+			</div>
+
+			<div class="col-md-6 nonone" id="divNombresApellidosUpd">
+				<div class="form-group">
+					<label>Nombres y Apellidos</label>
+					<input type="text" class="form-control" id="txtNombresApeCliUpd" name="txtNombresApeCli"
+						[value]="listarInformacionCliente.CLI" placeholder="Ingrese nombres y apellidos"
+						autocomplete="nope" maxlength="200">
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Telefono 1 </label>
+					<input type="text" class="form-control" id="txtTelefono1Upd" name="txtTelefono1Upd"
+						[value]="listarInformacionCliente.TEL1" placeholder="Ingrese teléfono" autocomplete="nope"
+						maxlength="10">
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Telefono 2 </label>
+					<input type="text" class="form-control" id="txtTelefono2Upd" name="txtTelefono2Upd"
+						[value]="listarInformacionCliente.TEL2" placeholder="Ingrese teléfono" autocomplete="nope"
+						maxlength="10">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<label>Datos del Conyuge</label>
+					<input type="text" class="form-control" id="txtDatosConyugeUpd" name="txtDatosConyugeUpd"
+						[value]="listarInformacionCliente.CONY" placeholder="Ingrese Direccion" autocomplete="nope"
+						maxlength="200">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<label>Dirección</label>
+					<input type="text" class="form-control" id="txtDireccionUpd" name="txtDireccionUpd"
+						[value]="listarInformacionCliente.DIRCLI" placeholder="Ingrese Direccion" autocomplete="nope"
+						maxlength="200">
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Correo Electrónico</label>
+					<input type="email" class="form-control" id="txtCorreoElecUpd" name="txtCorreoElecUpd"
+						[value]="listarInformacionCliente.CO" placeholder="Ingrese correo (ejemplo@ejemplo.com)"
+						autocomplete="nope" maxlength="70">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label></label>
+					<div class="icheck-primary">
+						<input type="checkbox" id="cbClienteMoroso" [checked]="listarInformacionCliente.MORS">
+						<label for="cbClienteMoroso">
+							Cliente Moroso
+						</label>
+					</div>
+				</div>
+			</div>
+			<!-- /.col -->
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-12">
+				<span class="float-left badge bg-danger tituloNumeroCredito">2</span>
+				<h5 class="tituloSeccionCredito">&nbsp; Información del Aval</h5>
+			</div>
+
+			<div class="col-md-2">
+				<button type="button" class="btn btn-block btn-outline-secondary" data-toggle="modal"
+					data-target="#modal-xl">Buscar AVAL</button>
+			</div>
+			<div class="col-md-10">
+				<div style="margin-top: 5px;">
+					<p>
+						<span style="font-weight:700;"> Código: </span> <span #spanCodigoClienteUpd
+							id="spanCodigoClienteUpd">
+							{{listarInformacionCliente.CODA}} </span>
+						<span style="font-weight:700;"> Nombres y Apellidos: </span> <span #spanNomrsClienteUpd
+							id="spanNomrsClienteUpd"> {{listarInformacionCliente.CLIA}} </span>
+						<span style="font-weight:700;"> Dirección: </span> <span #spanDirClienteUpd
+							id="spanDirClienteUpd">
+							{{listarInformacionCliente.DIRA}} </span>
+					</p>
+				</div>
+			</div>
+		</div>
+		<br>
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-md-12">
+				<span class="float-left badge bg-danger tituloNumeroCredito">3</span>
+				<h5 class="tituloSeccionCredito">&nbsp; Documentos - Files</h5>
+			</div>
+
+			<div class="col-md-6">
+				<label>Seleccionar Archivo: &nbsp;</label>
+					<input type="file" id="filecliup" name="filecliup" (change)="cargarImagen($event)"
+						accept="image/png, image/jpeg, application/pdf">
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-secondary" (click)="onClickGuardarFile(listarInformacionCliente.COD)">Guardar Archivo</button>
+			</div>
+            <br>
+			<br>
+			<div class="col-12 col-xl-7">
+				<table class="table table-bordered table-striped dataTable dtr-inline" id="dtlistadocumentosupdate">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Documento</th>
+							<th class="classCentrarfinal">Descarcar / Previsualizar </th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let file of listarfiles let i = index">
+							<td>{{i + 1}}</td>
+							<td>{{file.ARCH_ORI}}</td>
+							<td class="classCentrarfinal">
+								<a href="{{vUrlfile}}DownloadFile/{{listarInformacionCliente.COD}}/{{file.ARCH_SER}}" target="_blank">
+									<img src="./assets/imagenes/nube.png" alt="Descargar Archivo" class="classTamanioIcono">
+								</a>
+
+								<a href="{{vUrlfile}}previewFile/{{listarInformacionCliente.COD}}/{{file.ARCH_SER}}" target="_blank">
+									<img src="./assets/imagenes/vista.png" alt="Previsualizar Archivo" class="classTamanioIcono">
+								</a>
+							</td>
+							<td class="classCentrarfinal">
+								<img src="./assets/imagenes/eliminar.png" class="classTamanioIcono" (click)="EliminarFile(listarInformacionCliente.COD,file.COD_CLI_D, file.ARCH_SER,file.ARCH_ORI)" >
+							</td>
+
+						  </tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- /.card-body -->
+	<div class="card-footer">
+		<button type="submit" class="btn btn-default" routerLink="/pages/listarcliente">Regresar</button>
+		<button type="button" class="btn btn-info float-right" [attr.data-codcli]="listarInformacionCliente.COD"
+			(click)="onClickGrabarClienteUpd($event)">Guardar</button>
+	</div>
+</div>
+<!-- /.card -->
+
+<!-- MODAL BUSCAR CLIENTE -->
+
+<div class="modal fade" id="modal-xl">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Buscar AVAL</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalUpd>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row" style="background-color: #f5eded">
+					<div class="col-md-12">
+						<br />
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<input type="text" class="form-control" id="txtCodigoClienteBuscarUpd"
+								placeholder="Código: ejemplo 12" #txtCodigoClienteBuscarUpd>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<input type="text" class="form-control" id="txtDocumentoBuscarUpd"
+								placeholder="Dod Cli: 70339030" #txtDocumentoBuscarUpd>
+						</div>
+					</div>
+					<div class="col-md-7">
+						<div class="form-group">
+							<input type="text" class="form-control" id="txtNomRazonSoBuscarUpd"
+								placeholder="Nombres o Apellidos - Razón Social: Silvia Huarcaya Misajel"
+								#txtNomRazonSoBuscarUpd>
+						</div>
+					</div>
+					<div class="col-md-1">
+						<button type="button" class="btn btn-info"
+							(click)="OnClickBuscarListarClienteAvalUpd(txtCodigoClienteBuscarUpd.value,txtDocumentoBuscarUpd.value,txtNomRazonSoBuscarUpd.value)">BUSCAR</button>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column"
+						*ngFor="let cleinteAval of listarClienteAvalUpd">
+						<div class="card bg-light d-flex flex-fill">
+							<div class="card-body pt-0">
+								<div class="row">
+									<div class="col-7">
+										<h2 class="lead"><b>{{cleinteAval.NARSC}}</b></h2>
+										<ul class="ml-4 mb-0 fa-ul text-muted">
+											<li class="small"><span class="fa-li"><i
+														class="fas fa-lg fa-building"></i></span> Dirección:
+												{{cleinteAval.DIRC}}</li>
+											<li class="small"><span class="fa-li"><i
+														class="fas fa-lg fa-phone"></i></span> Teléfonos:
+												{{cleinteAval.TELC}}</li>
+										</ul>
+									</div>
+									<div class="col-5 text-center">
+										<br />
+										<img src="./assets/imagenes/user.svg" alt="user-avatar"
+											class="img-circle img-fluid" style="width: 80px;">
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div class="text-right">
+									<a class="btn btn-sm btn-primary" [attr.data-codcli]="cleinteAval.CODC"
+										[attr.data-nomrs]="cleinteAval.NARSC" [attr.data-dirc]="cleinteAval.DIRC"
+										(click)="SeleccionarClienteAvalUpd($event)">
+										<i class="fas fa-user"></i> Seleccionar
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.col -->
+			</div>
+			<div class="modal-footer justify-content-between">
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>

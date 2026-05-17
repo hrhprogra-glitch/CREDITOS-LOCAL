@@ -1,0 +1,194 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="titulomodulo">Lista de Clientes</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Cliente</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body">
+            <button type="submit" class="btn btn-info" routerLink="/pages/gestionarcliente">Nuevo Cliente</button>
+            <table id="tdClientes" class="table table-bordered table-striped" datatable [dtOptions]="dtOptionsLC"
+              [dtTrigger]="dtTriggerLC">
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Cliente</th>
+                  <th>Teléfonos</th>
+                  <th>Correo</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+              </thead>
+              <tbody style="font-size: 13px;">
+                <tr *ngFor="let cli of listarClientes let i = index">
+                  <td>{{cli.COD}}</td>
+                  <td>{{cli.CLI}}</td>
+                  <td><img src="./assets/imagenes/telephone.svg" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cli.TELS}}</td>
+                  <td><img src="./assets/imagenes/message.svg" class="classTamanioIcono"
+                      style="width:20px; height:20px">{{cli.CO}}</td>
+                  <td class="classCentrarfinal"><img src="./assets/imagenes/escritura.png" class="classTamanioIcono"
+                      [routerLink]="['/pages/actualizacliente',cli.COD]">
+                      <img src="./assets/imagenes/dia-de-paga.png"
+                      (click)="onCliclVerCreditosdelCliente(cli.COD,cli.CLI)"
+                      class="classTamanioIcono" data-toggle="modal" data-target="#modal-xl">
+                      <img src="./assets/imagenes/enviar.png"
+                      (click)="onClienteAbrirSeguimiento(cli.COD, cli.CLI)"
+                      class="classTamanioIcono" data-toggle="modal" data-target="#modalhistoralseguimiento">
+                    </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Cliente</th>
+                  <th>Teléfonos</th>
+                  <th>Correo</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- /Modal Listar Creditos -->
+    <div class="modal fade" id="modal-xl">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-weight: 600;">Creditos del Cliente ({{vgClienteNombre}})</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6" *ngFor="let cli of listarClientesCreditos let i = index">
+                <!-- Widget: user widget style 1 -->
+                <div class="card card-widget widget-user">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="widget-user-header bg-info ColorCardCredito">
+                    <h3 class="widget-user-username" style="font-weight: bold;">CRE-{{cli.CODC}}</h3>
+                    <h6 class="widget-user-desc">Fecha de Emisión: {{cli.FIC}}</h6>
+                  </div>
+                  <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="./assets/imagenes/salary.svg" alt="User Avatar">
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                          <h5 class="description-header">S/ {{cli.MONC}}</h5>
+                          <span class="description-text">MONTO</span>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                          <h5 class="description-header">S/ {{cli.SMONS}}</h5>
+                          <span class="description-text">DEUDA</span>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4">
+                        <div class="description-block">
+                          <span [ngClass]="cli.ECC">{{cli.EC}}</span>
+                          <br />
+                          <span class="description-text">ESTADO</span>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <div class="row" style="background-color: white;">
+                      <div class="col-sm-12">
+                        <!-- /.card-header -->
+                        <div class="card-body p-0 divscroll" style="height: 500px; overflow-y: auto">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Fecha Pago</th>
+                                <th>Monto Cuota</th>
+                                <th>Monto Saldo</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let clicro of cli.JSON_CRONO let i = index">
+                                <td>{{clicro.NUMC}}</td>
+                                <td>{{clicro.FV}}</td>
+                                <td>
+                                  S/ {{clicro.MONC}}
+                                </td>
+                                <td>S/ {{clicro.MONS}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.widget-user -->
+              </div>
+
+            </div>
+
+          </div>
+          <div class="modal-footer justify-content-between">
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modalhistoralseguimiento">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-weight: bold;">Historial - Observaciones del cliente ({{vgClienteNombre}})</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <app-historialseguimiento [vCodigoCliente]="vgCliente" [vListarSeguimiento]="listarSeguimiento"></app-historialseguimiento>
+          </div>
+          <div class="modal-footer justify-content-between">
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

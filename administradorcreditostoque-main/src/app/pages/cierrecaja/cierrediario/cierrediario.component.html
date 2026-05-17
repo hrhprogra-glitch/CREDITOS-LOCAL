@@ -1,0 +1,292 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="titulomodulo">Nuevo Cierre Diario</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Cierre Diario</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- SELECT2 EXAMPLE -->
+<div class="card card-default">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">1</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Fecha de Cierre</h5>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="font-weight500">Fecha de Cierre</label>
+                    <input type="date" class="form-control datetimepicker-input" id="idFechacierrediario"
+                        #idFechacierrediario>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">2</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Cobranzas de Oficina</h5>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="font-weight500">Cliente</label>
+                    <input type="text" class="form-control" id="txtclientecierrediario"
+                        placeholder="Nombre del cliente">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500">Monto del Pago</label>
+                    <input type="number" min="1" class="form-control" id="txtmontocierrediario"
+                        placeholder="Monto de pago">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="font-weight500">¿Quién recibió el pago?</label>
+                    <input type="text" class="form-control" id="txtrecibiocierrediario"
+                        placeholder="Nombre de quien recibió el pago">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500"> Observaciones/Notas</label>
+                    <input type="text" class="form-control" id="txtobscierrediario"
+                        placeholder="Nombre de quien recibió el pago">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-block btn-secondary" style="margin-top: 30px;"
+                        id="btnaddcobranzacierrediario">AÑADIR</button>
+                </div>
+            </div>
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline" id="dtCobranzasOficina">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Monto</th>
+                            <th>¿Quién recibió?</th>
+                            <th>Observaciones</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="dtCobranzasOficinabody">
+
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Total Cobranza Oficina</th>
+                        <th colspan="4" id="thtotalcobranzaoficina">0.00</th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">3</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen de Pagos según lista de cobranza</h5>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500">Lista de cobranza</label>
+                    <select class="form-control" id="cboListacobranzacierediario" #cboListacobranzacierediario>
+                        <option value="0">Seleccionar Lista de cobranza</option>
+                        <option [value]="item.COD" *ngFor="let item of listListacobranza let i = index">{{item.DESC}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500">Modalidad de Cobranza</label>
+                    <select class="form-control" id="cboModalidadcobranzacierrediario" #cboModalidadcobranzacierrediario>
+                        <option value="0">Seleccionar Modalidad</option>
+                        <option value="1">Efectivo</option>
+                        <option value="2">Depósito</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500">Monto</label>
+                    <input type="number" min="1" class="form-control" id="txtmontolistacobranza"
+                        placeholder="Monto de pago">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-block btn-secondary" style="margin-top: 30px;"
+                        id="btnaddlistacobranzacierrediario">AÑADIR</button>
+                </div>
+            </div>
+
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline" id="dtResumenpagoslistacobranza">
+                    <thead>
+                        <tr>
+                            <th>Lista de Cobranza</th>
+                            <th>Efectivo</th>
+                            <th>Deposito</th>
+                            <th>Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="dtResumenpagoslistacobranzabody">
+
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Totales</th>
+                        <th id="thTotalefectivolistadocobranza">0.00</th>
+                        <th id="thTotaldepositolistadocobranza">0.00</th>
+                        <th id="thTotalsubtotallistadocobranza">0.00</th>
+                        <th></th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">4</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen de Gatos</h5>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="font-weight500">Descripción del Gasto</label>
+                    <input type="text" class="form-control" id="txtdescripciongatocierrediario"
+                        placeholder="Descripción del gatos">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="font-weight500">Monto</label>
+                    <input type="number" class="form-control" id="txtmontogastocierrediario"
+                        placeholder="Monto del Gasto">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-block btn-secondary" style="margin-top: 30px;"
+                        id="btnaddresumengastos">AÑADIR</button>
+                </div>
+            </div>
+
+            <div class="col-12 col-xl-12">
+                <table class="table table-bordered table-striped dataTable dtr-inline" id="dtResumengastos">
+                    <thead>
+                        <tr>
+                            <th>Descripción Gastos</th>
+                            <th>Monto</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="dtResumengastosbody">
+
+
+                    </tbody>
+                    <tfoot style="font-size: 15px">
+                        <th>Total Gastos</th>
+                        <th colspan="2" id="thtotalgastoscierrediario">0.00</th>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left badge bg-danger tituloNumeroCredito">5</span>
+                <h5 class="tituloSeccionCredito">&nbsp; Resumen Total</h5>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>T. Oficina</label>
+                    <input class="form-control" [value]="0.00" id="txttotaloficinacierrediario"
+                        #txttotaloficinacierrediario disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #f3f56e">
+                </div>
+
+            </div>
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">+</label>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Total Efectivo</label>
+                    <input class="form-control" [value]="vgTotalefectivo" id="txttotalefectivocierrediario"
+                        #txttotalefectivocierrediario disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #75dcf3">
+                </div>
+
+            </div>
+
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">-</label>
+            </div>
+
+            <div class="col-md-2">
+
+                <div class="form-group">
+                    <label>Total Gastos</label>
+                    <input class="form-control" [value]="0.00" id="txttotalgastoscierrediario"
+                        #txttotalgastoscierrediario disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #ff00008a">
+                </div>
+
+            </div>
+            <div class="col-auto">
+                <label style="font-size: 25px; margin-top: 27px;">=</label>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>-</label>
+                    <input class="form-control" [value]="0.00" id="txttotalcierrediario" #txttotalcierrediario disabled
+                        style="font-weight: bold; font-size: 20px; text-align: end; background-color: #82f982">
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <button type="button" class="btn btn-block btn-secondary"
+                    id="btncalculartotales">CALCULAR</button>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <button type="button" class="btn btn-default" routerLink="/pages/listarcierrediario">Cancelar</button>
+        <button type="button" class="btn btn-info float-right" [disabled]="vBloquearBoton==true" (click)="onClickRegistrarCierreDiario(idFechacierrediario.value,txttotaloficinacierrediario.value,txttotalefectivocierrediario.value,txttotalgastoscierrediario.value, txttotalcierrediario.value)">Guardar</button>
+
+    </div>
+</div>
+<!-- /.card -->

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CAT_MODELOS\CAT_MODELOS.csproj" />
+    <ProjectReference Include="..\CAT_REPOSITORIO\CAT_REPOSITORIO.csproj" />
+    <ProjectReference Include="..\CAT_UNITOFWORK\CAT_UNITOFWORK.csproj" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>

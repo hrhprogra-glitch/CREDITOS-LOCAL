@@ -1,0 +1,264 @@
+<app-loader [vVisualizarLoader]="vLoader"></app-loader>
+
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Cuaderno de Cobranza del Cliente</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Crédito</li>
+        </ol>
+      </div>
+    </div>
+
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title colorTituloVentana">Crédito: {{vCodigoCredito}}</h3>
+            <!--<i class="fas fa-sync-alt" style="margin-left: 12px" [attr.data-codcred]="vCodigoCredito" (click)="actualizarFechasPendientesCreditosPorCredito(vCodigoCredito)"></i>-->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <span style="font-weight:bold">Cliente:</span>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <span class="classPersonalHistorial">{{listarCreditosHistorial[0].CLI}}</span>
+                  <span class="classClienteNoataHistorial"
+                    *ngIf="listarCreditosHistorial[0].NOTA !=''">{{listarCreditosHistorial[0].NOTA}}</span>
+                  <span class="classMontoHistorial">Monto de Crédito S/ {{listarCreditosHistorial[0].MONC}}</span>
+                  <span class="classMontoHistorial">Pago {{listarCreditosHistorial[0].DES_TC}} S/
+                    {{listarCreditosHistorial[0].MONCU}}</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-2">
+                <span style="font-weight:bold">Fecha Entrega:</span>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <span class="classFechaEntregaHistorial">{{listarCreditosHistorial[0].FEEN}}</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-2">
+                <span style="font-weight:bold">Vigencia:</span>
+              </div>
+              <div class="col-md-10">
+
+                <div class="form-group">
+                  <span id="spanEtiquetaPersonalHis"
+                    class="classVencimientogaHistorial">{{listarCreditosHistorial[0].FIC}}</span>
+                  <span id="spanEtiquetaPersonalHis"
+                    class="classVencimientogaHistorial">{{listarCreditosHistorial[0].FFC}}</span>
+                  <span id="spanEtiquetaPersonalHis" class="classMontoHistorial"> {{listarCreditosHistorial[0].NUMC}}
+                    {{listarCreditosHistorial[0].DETA_TC}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5">
+                <table id="tCuadernoCobranzaHistorial" class="table table-bordered table-striped" datatable
+                  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                  <thead>
+                    <tr>
+                      <th>Día</th>
+                      <th>Fecha</th>
+                      <th class="classCentrarfinal ">Saldo</th>
+                      <th class="classCentrarfinal ">Mon. Pago</th>
+                      <th class="classCentrarfinal ">Pago</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let cuaderno of listarCreditosHistorial[0].JSON_CRONO; let i = index">
+                      <td>{{i + 1}} </td>
+                      <td>{{cuaderno.FPAGO}} </td>
+                      <td class="classCentrarfinal">{{cuaderno.MONS}} </td>
+                      <td class="classCentrarfinal">{{cuaderno.MONP}} </td>
+                      <td class="classCentrarfinal">
+                        <div *ngIf="cuaderno.PAGO==='-' && editarObservacionCredito===1 ; else elseBlock"><button
+                            data-toggle="modal" data-target="#mEditarCredito"
+                            (click)="onclickModalActualizarObservaciones($event)" [attr.data-codcred]="cuaderno.COD_CRE"
+                            [attr.data-fecha]="cuaderno.FPAGO" [attr.data-codcre]="listarCreditosHistorial[0].CODC"
+                            type="button" class="btn btn-info">Editar</button></div>
+                        <ng-template #elseBlock>{{cuaderno.PAGO}}</ng-template>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="divCuadernoCobranza" #divCuadernoCobranza [ngClass]="vWidthDiv" class="nonone">
+              <div class="row" style="padding-left: 15px;">
+                <span style="font-weight:bold; font-size: 18px;">Crédito: </span>
+                <span style="font-size:16px" class="classPersonalHistorial">{{vCodigoCredito}}</span>
+              </div>
+              <div class="row" style="padding-left: 15px;">
+                <span style="font-weight:bold; font-size: 18px;">Cliente: </span>
+                <span style="font-size:16px" class="classPersonalHistorial">{{listarCreditosHistorial[0].CLI}}</span>
+                <span class="classClienteNoataHistorial" style="font-size:18px"
+                  *ngIf="listarCreditosHistorial[0].NOTA !=''">{{listarCreditosHistorial[0].NOTA}}</span>
+                <span class="classMontoHistorial" style="font-size:18px">Monto de Crédito S/
+                  {{listarCreditosHistorial[0].MONC}}</span>
+                <span class="classMontoHistorial" style="font-size:18px">Pago {{listarCreditosHistorial[0].DES_TC}} S/
+                  {{listarCreditosHistorial[0].MONCU}}</span>
+              </div>
+              <div class="row" style="padding-left: 15px;">
+                <span style="font-weight:bold; font-size: 18px;">Fecha Entrega: </span><span
+                  class="classFechaEntregaHistorial" style="font-size:18px">{{listarCreditosHistorial[0].FEEN}}</span>
+              </div>
+              <div class="row" style="padding-left: 15px;">
+                <span style="font-weight:bold; font-size: 18px;">Vigencia:</span> <span
+                  id="spanEtiquetaPersonalHis" class="classVencimientogaHistorial"
+                  style="font-size:18px">{{listarCreditosHistorial[0].FIC}}</span>
+                <span id="spanEtiquetaPersonalHis" style="font-size:18px"
+                  class="classVencimientogaHistorial">{{listarCreditosHistorial[0].FFC}}</span>
+                <span id="spanEtiquetaPersonalHis" class="classMontoHistorial" style="font-size:18px">
+                  {{listarCreditosHistorial[0].NUMC}}
+                  {{listarCreditosHistorial[0].DETA_TC}}</span>
+              </div>
+              <div class="row" style="padding-left: 10px;">
+                <div [ngClass]="vClassRow">
+                  <table class="table table-bordered table-striped" id="tdListadoCobranzaTwo">
+                    <thead>
+                      <tr>
+                        <th>Día</th>
+                        <th>Fecha</th>
+                        <th class="classCentrarfinal ">Saldo</th>
+                        <th class="classCentrarfinal ">Mon. Pago</th>
+                        <th class="classCentrarfinal ">Pago</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let cuaderno of listarCreditosHistorial[0].JSON_CRONO; let i = index">
+                        <ng-template [ngIf]="vCantidadRegistrosDividido >= i">
+                          <td>{{i + 1}} </td>
+                          <td>{{cuaderno.FPAGO}} </td>
+                          <td class="classCentrarfinal">{{cuaderno.MONS}} </td>
+                          <td class="classCentrarfinal">{{cuaderno.MONP}} </td>
+                          <td class="classCentrarfinal">
+                            <div *ngIf="cuaderno.PAGO==='-' && editarObservacionCredito===1 ; else elseBlock"><button
+                                data-toggle="modal" data-target="#mEditarCredito"
+                                (click)="onclickModalActualizarObservaciones($event)"
+                                [attr.data-codcred]="cuaderno.COD_CRE" [attr.data-fecha]="cuaderno.FPAGO"
+                                [attr.data-codcre]="listarCreditosHistorial[0].CODC" type="button"
+                                class="btn btn-info">Editar</button></div>
+                            <ng-template #elseBlock>{{cuaderno.PAGO}}</ng-template>
+                          </td>
+                        </ng-template>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div [ngClass]="vClassRow" *ngIf="vCantidadRegistros > 40">
+                  <table class="table table-bordered table-striped" id="tdListadoCobranzaTwo">
+                    <tbody>
+                      <tr *ngFor="let cuaderno of listarCreditosHistorial[0].JSON_CRONO; let i = index">
+                        <ng-template [ngIf]="vCantidadRegistrosDividido < i">
+                          <td>{{i + 1}} </td>
+                          <td>{{cuaderno.FPAGO}} </td>
+                          <td class="classCentrarfinal">{{cuaderno.MONS}} </td>
+                          <td class="classCentrarfinal">{{cuaderno.MONP}} </td>
+                          <td class="classCentrarfinal">
+                            <div *ngIf="cuaderno.PAGO==='-' && editarObservacionCredito===1 ; else elseBlock"><button
+                                data-toggle="modal" data-target="#mEditarCredito"
+                                (click)="onclickModalActualizarObservaciones($event)"
+                                [attr.data-codcred]="cuaderno.COD_CRE" [attr.data-fecha]="cuaderno.FPAGO"
+                                [attr.data-codcre]="listarCreditosHistorial[0].CODC" type="button"
+                                class="btn btn-info">Editar</button></div>
+                            <ng-template #elseBlock>{{cuaderno.PAGO}}</ng-template>
+                          </td>
+                        </ng-template>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer classFooterEstatico">
+            <div style="width: 100%;">
+              <button type="submit" (click)="onClickRegresar()" class="btn btn-default">Regresar</button>
+               <!--<button type="submit" class="btn btn-info float-right" (click)="openPDF()">Descargar
+                Cronograma- PDF</button>-->
+              <button type="submit" class="btn btn-info float-right" (click)="generateImage()">Descargar
+                Cronograma - Imagen</button>
+            </div>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- /Modal Listar Creditos -->
+  <div class="modal fade" id="mEditarCredito">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Actualizar Crédito</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModal>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <span style="font-weight:bold">Fecha:</span>
+            </div>
+            <div class="col-md-9">
+              <span style="color: blue;" id="spanFechaCredito">-</span>
+            </div>
+            <div class="col-md-3">
+              <span style="font-weight:bold">Monto:</span>
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="txtObservacionesCredito" autocomplete="nope"
+                name="txtObservacionesCredito">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button id="btnActualizarComentariosCredito" (click)="onclickActualizarComentariosCredito($event)"
+            class="btn btn-primary" [attr.data-codigodetacred]="0" [attr.data-codcre]="0">Guardar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+</section>
+<!-- /.content -->
+<img #canvas class="nonone">
+<a #downloadLink class="nonone"></a>

@@ -1,0 +1,224 @@
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" *ngIf="listcierrecajaUtilidad.length > 0">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+                            {{listcierrecajaUtilidad[0].JSON_CONFIG[0].TI}}
+                        </h3>
+
+                        <input id="txtMesCierreCajaUtilidad" name="txtMesCierreCajaUtilidad" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CONFIG[0].MES">
+                        <input id="txtAnioCierreCajaUtilidad" name="txtAnioCierreCajaUtilidad" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CONFIG[0].YEAR">
+                        <input id="txtFechaIniCierreCajaUtilidad" name="txtFechaIniCierreCajaUtilidad" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CONFIG[0].FI">
+                        <input id="txtFechaFinCierreCajaUtilidad" name="txtFechaFinCierreCajaUtilidad" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CONFIG[0].FF">
+                        <input id="txtAccionCierreCajaUtilidad" name="txtAccionCierreCajaUtilidad" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CONFIG[0].ACC">
+                        <input id="txtTotalregistros" name="txtTotalregistros" type="hidden"
+                            [value]="listcierrecajaUtilidad[0].JSON_CREDITOS.length">
+
+                        <i class="fas fa-search" style="margin-left: 12px" data-toggle="modal"
+                            data-target="#mBuscarCierresCajas"></i>
+
+                        <span style="margin-left: 12px"></span>
+
+                        <span class="badge badge-success classSemanasAnteriores" style="margin-left: 5px"
+                            *ngFor="let cuante of listcierrecajaUtilidad[0].JSON_LISTACO_ANT"
+                            (click)="onClickBuscarCierreUtilidadAccesoDirecto(cuante.ACC,cuante.FI,cuante.FF)">{{cuante.SEM}}</span>
+
+                        <ng-template [ngIf]="listcierrecajaUtilidad[0].JSON_CONFIG[0].CC == 0" [ngIfElse]="CerradoCC">
+                            <h3 class="card-title colorTituloVentana float-right"
+                                style="font-weight: bold; font-size: 17px; color: red;">
+                                ABIERTO
+                            </h3>
+                        </ng-template>
+                        <ng-template #CerradoCC>
+                            <h3 class="card-title colorTituloVentana float-right"
+                                style="font-weight: bold; font-size: 17px; color: green;">
+                                CERRADO
+                            </h3>
+                        </ng-template>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+
+                        <table id="tCierreCajaUtilidad" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead style="font-size: 12px;">
+                                <tr>
+                                    <th>Crédito</th>
+                                    <th>Cliente</th>
+                                    <th>F. Ent.</th>
+                                    <th class="classCentrarfinal">Monto Cred.</th>
+                                    <th class="classCentrarfinal">Util. Neta</th>
+                                    <th class="classCentrarfinal">Util. Acumul.</th>
+                                    <th class="classCentrarfinal">Util. Ult.</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px;">
+
+                                <tr
+                                    *ngFor="let cierrecajaUtilibody of listcierrecajaUtilidad[0].JSON_CREDITOS let i = index">
+                                    <td class="">
+                                        {{cierrecajaUtilibody.COD_CRE}}
+                                        <span class="nonone">{{cierrecajaUtilibody.COD_CLI}}</span>
+                                    </td>
+                                    <td>
+                                        {{cierrecajaUtilibody.CLI}}
+                                        <span>({{cierrecajaUtilibody.MONT_CUO}})</span>
+                                        <span style="font-style: italic; color: #e76407; font-weight: 600;">
+                                            {{cierrecajaUtilibody.NOTA}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{cierrecajaUtilibody.FEE}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold">
+                                        {{cierrecajaUtilibody.MONT_CRE}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold classColorBlue">
+                                        {{cierrecajaUtilibody.UTI}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold CB0CD7">
+                                        {{cierrecajaUtilibody.UTIL_ANT}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold F56319">
+                                        {{cierrecajaUtilibody.UTI_REC}}
+                                    </td>
+                                    <td class="fontBold">
+                                        <ng-template [ngIf]="cierrecajaUtilibody.FLAG == 1">
+                                            <span class="c16A04A"> 100%</span>
+                                        </ng-template>
+                                        <ng-template [ngIf]="cierrecajaUtilibody.FLAG == 0">
+                                            <span class="montoCuota"> Parcialmente</span>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="font-size: 12px;">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="classCentrarfinal">{{vgSumTotalCreditosString}}</th>
+                                    <th class="classCentrarfinal">{{vgSumTotalUtilidadNetaString}}</th>
+                                    <th class="classCentrarfinal">{{vgSumTotalUtiAcuString}}</th>
+                                    <th class="classCentrarfinal">{{listcierrecajaUtilidad[0].JSON_SUM[0].SUM_UTI}}</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br>
+
+                        <h2 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+                            Créditos Entregados en el MES
+                        </h2>
+                        <table id="tCierreCajaUtilidadNeta"
+                            class="table table-bordered table-hover dataTable dtr-inline" datatable
+                            [dtOptions]="dtOptionsNeta" [dtTrigger]="dtTriggerNeta">
+                            <thead style="font-size: 12px;">
+                                <tr>
+                                    <th>Crédito</th>
+                                    <th>Cliente</th>
+                                    <th>F. Ent.</th>
+                                    <th class="classCentrarfinal">Monto Cred.</th>
+                                    <th class="classCentrarfinal">Util. Neta</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px;">
+
+                                <tr
+                                    *ngFor="let cierrecajaUtilibody of listcierrecajaUtilidad[0].JSON_CREDITOS_N let i = index">
+                                    <td class="">
+                                        {{cierrecajaUtilibody.COD_CRE}}
+                                        <span class="nonone">{{cierrecajaUtilibody.COD_CLI}}</span>
+                                    </td>
+                                    <td>
+                                        {{cierrecajaUtilibody.CLI}}
+                                    </td>
+                                    <td>
+                                        {{cierrecajaUtilibody.FEE}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold">
+                                        {{cierrecajaUtilibody.MONT_CRE}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold classColorBlue">
+                                        {{cierrecajaUtilibody.MONT_UTI}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="font-size: 12px;">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="classCentrarfinal">
+                                        {{listcierrecajaUtilidad[0].JSON_SUM_N[0].MONT_CRE}}</th>
+                                    <th class="classCentrarfinal">
+                                        {{listcierrecajaUtilidad[0].JSON_SUM_N[0].MONT_UTI}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer classFooterEstatico">
+                        <div style="width: 100%;">
+                            <button type="submit" class="btn btn-info" (click)="OnclickDescargarPDF()">Descargar
+                                Cierre</button>
+                            <ng-template [ngIf]="listcierrecajaUtilidad[0].JSON_CONFIG[0].CC == 0">
+                                <button type="submit" class="btn btn-info float-right"
+                                    (click)="onClickCerrarCierreUtilidad()">Cerrar Utilidad</button>
+                            </ng-template>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+    <!-- /Modal Buscar Otros cuadernos de cobranza -->
+    <div class="modal fade" id="mBuscarCierresCajas">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Consultar Cierres de Cajas</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        #cerrarModalCierreUtilidad>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span style="font-weight:bold">Seleccionar Año y Mes</span>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="month" class="form-control datetimepicker-input" id="dtFechaCierreUtilidad">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-default"
+                                (click)="onClickBuscarCierreUtilidadModal()">Buscar</button>
+                        </div>
+                    </div>
+                    <br>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+<!-- /.content -->

@@ -1,0 +1,77 @@
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Aval</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Aval</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title colorTituloVentana">Lista de Avales</h3>
+              
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <button type="submit" class="btn btn-info" routerLink="/pages/nuevoaval">Nuevo Aval</button>
+              <table id="tdAvales" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Nombres</th>
+                  <th>Teléfonos</th>
+                  <th>Correo</th>
+                  <th>Direccion</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+                </thead>
+                <tbody style="font-size: 13px;">
+                  <tr *ngFor="let aval of listarAvales let i = index">
+                    <td>{{aval.CODIGO_AVAL}}</td>
+                    <td>{{aval.NOMBRES_AVAL}}</td>
+                    <td><img src="./assets/imagenes/telephone.svg" class="classTamanioIcono" style="width:20px; height:20px">{{aval.TELEFONO_AVAL}}</td>
+                    <td><img src="./assets/imagenes/message.svg" class="classTamanioIcono" style="width:20px; height:20px">{{aval.CORREO_AVAL}}</td>
+                    <td>{{aval.DIRECCION_AVAL}}</td>
+                    <td class="classCentrarfinal"><img src="./assets/imagenes/escritura.png" class="classTamanioIcono" [routerLink]="['/pages/actualizaraval',aval.CODIGO_AVAL]"></td>
+                  </tr>
+                </tbody>
+                
+                <tfoot>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombres</th>
+                    <th>Teléfonos</th>
+                    <th>Correo</th>
+                    <th>Direccion</th>
+                    <th class="classCentrarfinal">Opciones</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+
+

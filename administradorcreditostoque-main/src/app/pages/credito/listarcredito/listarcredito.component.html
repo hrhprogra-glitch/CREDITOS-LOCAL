@@ -1,0 +1,197 @@
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="titulomodulo">Lista de Créditos</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Créditos</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row"> 
+                <div class="col-md-1 classTextAlingRigth">
+                  <span style="font-weight:bold">F. Desde:</span>
+                </div>
+                <div class="col-md-2">
+                  <input type="date" class="form-control datetimepicker-input" id="dtFechaIniCredito" #dtFechaIniCredito>
+                </div>
+                <div class="col-md-1 classTextAlingRigth">
+                  <span style="font-weight:bold">Hasta:</span>
+                </div>
+                <div class="col-md-2">
+                  <input type="date" class="form-control datetimepicker-input" id="dtFechaFinCredito" #dtFechaFinCredito>
+                </div>
+                <div class="col-md-1 classTextAlingRigth">
+                  <span style="font-weight:bold">Cliente:</span>
+                </div>
+                <div class="col-md-3">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control nonone" disabled id="txtCodigoCliente" value="0" #txtCodigoCliente>
+                    <input type="text" class="form-control" disabled id="txtClienteBusquedaAvanzada">
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-default btn-flat" (click)="onClickBorrarDatosClientes()">Limpiar</button>
+                      <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modalClienteBusqueda">Buscar Cliente</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-default" (click)="onClickCreditoPorFechaCliente(txtCodigoCliente.value,dtFechaIniCredito.value, dtFechaFinCredito.value)">Buscar</button>
+                  <button type="button" class="btn btn-default" (click)="onClieckActualizarCreditos()"><i class="fas fa-sync-alt"></i></button>
+                </div>
+                <div class="col-md-1">
+                  <button type="submit" class="btn btn-info" routerLink="/pages/gestionarcredito">Nuevo C.</button>
+                </div>
+              </div>
+              <hr>
+              <br>
+              <table id="tListarCreditos" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Fecha Entrega</th>
+                  <th>Fecha Vencimiento</th>
+                  <th>Cliente</th>
+                  <th>Monto de Crédito</th>
+                  <th>Monto Pendiente</th>
+                  <th>Estado</th>
+                  <th class="nonone">Codigo</th>
+                  <th class="classCentrarfinal">Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let objcredito of listarCreditos let i = index" >
+                    <td>CRE-{{objcredito.CODC}}</td>
+                    <td>{{objcredito.FEC}}</td>
+                    <td>{{objcredito.FEV}}</td>
+                    <td>
+                      {{objcredito.CLI}}
+                    </td>
+                    <td>
+                      <img src="./assets/imagenes/money-bag.svg" class="classTamanioIcono" >
+                      S/ {{objcredito.MONC}}
+                    </td>
+                    <td>
+                      <img src="./assets/imagenes/money-bagsaldo.svg" class="classTamanioIcono" >
+                      S/ {{objcredito.MONP}}
+                    </td>
+                    <td>
+                      <span [ngClass]="objcredito.ECC">{{objcredito.EC}}</span> 
+                    </td>
+                    <td class="nonone">{{objcredito.CODC}}</td>
+                    <td class="classCentrarfinal">
+                      <div *ngIf="objcredito.ECN===1; else elseBlock">
+                        <img src="./assets/imagenes/calendar.png" class="classTamanioIcono" [routerLink]="['/pages/cuadernocobranzahistorial',objcredito.CODC,1,0]">
+                        <img src="./assets/imagenes/escritura.png" class="classTamanioIcono" [routerLink]="['/pages/actualizarcreditocliente',objcredito.CODC]">
+                        <img src="./assets/imagenes/prohibido.svg" class="classTamanioIcono" [attr.data-codcre]="objcredito.CODC" (click)="onclickAnularcredito($event)">
+                      </div>               
+                      <ng-template #elseBlock><img src="./assets/imagenes/escritura.png" class="classTamanioIcono" [routerLink]="['/pages/actualizarcreditocliente',objcredito.CODC]">
+                        <img src="./assets/imagenes/calendar.png" class="classTamanioIcono" [routerLink]="['/pages/cuadernocobranzahistorial',objcredito.CODC,1,0]"></ng-template>
+                      
+                    </td>
+                    
+                  </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Fecha Entrega</th>
+                    <th>Fecha Vencimiento</th>
+                    <th>Cliente</th>
+                    <th>Monto de Crédito</th>
+                    <th>Monto Pendiente</th>
+                    <th>Estado</th>
+                    <th class="nonone">Estado</th>
+                    <th class="classCentrarfinal">Opciones</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+  </section>
+  <!-- /.content -->
+
+<!-- MODAL BUSCAR CLIENTE -->
+
+<div class="modal fade" id="modalClienteBusqueda">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Listado de Clientes</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalCliente>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="background-color: #f5eded">
+          <div class="col-md-12" >
+            <br/> 
+          </div>
+          <div class="col-md-11" >
+            <div class="form-group">
+              <input type="text" class="form-control" id="txtBuscarClienteAvanzado" placeholder="Ingrese Nombres" #txtBuscarClienteAvanzado>
+            </div>
+          </div>
+          <div class="col-md-1" >
+            <button type="button" class="btn btn-info" (click)="OnClickBuscarListarClienteCre(txtBuscarClienteAvanzado.value)">BUSCAR</button>
+          </div>
+        </div>
+        <br/> 
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column" *ngFor="let cleinteAval of listarClientes">
+            <div class="card bg-light d-flex flex-fill">
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b>{{cleinteAval.NARSC}}</b></h2>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Dirección: {{cleinteAval.DIRC}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfonos: {{cleinteAval.TELC}}</li>
+                    </ul>
+                  </div>
+                  <div class="col-5 text-center">
+                    <br/> 
+                    <img src="./assets/imagenes/user.svg" alt="user-avatar" class="img-circle img-fluid" style="width: 80px;">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="text-right">
+                  <a class="btn btn-sm btn-primary" [attr.data-codcli]="cleinteAval.CODC" [attr.data-nomrs]="cleinteAval.NARSC" [attr.data-dirc]="cleinteAval.DIRC" (click)="SeleccionarClienteCredito($event)">
+                    <i class="fas fa-user"></i> Seleccionar
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="modal-footer justify-content-between">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

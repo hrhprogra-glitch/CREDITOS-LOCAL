@@ -1,0 +1,226 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0"></h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Clientes</span>
+            <span class="info-box-number">{{listarInfoGeneral[0].T_CLI}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-frown"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Clientes Morosos</span>
+            <span class="info-box-number">{{listarInfoGeneral[0].T_CLI_MOR}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-cog"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Créditos Emitidos</span>
+            <span class="info-box-number">{{listarInfoGeneral[0].T_CRE}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><img style="width:30px"
+              src="./assets/imagenes/money-bag2.png"></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Monto Crédito</span>
+            <span class="info-box-number">
+              S/ {{listarInfoGeneral[0].T_MONT_CRE}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title colorTituloVentana">Seguimiento de Créditos</h5>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+
+              <div class="col-md-12">
+
+                <div class="progress-group">
+                  <span class="progress-text">Créditos Liquidados</span>
+                  <span class="float-right"><b>{{listarInfoGeneral[0].T_CRE_LIQUI}}</b>/{{listarInfoGeneral[0].T_CRE}}</span>
+                  <div class="progress progress-sm">
+                    <div class="progress-bar bg-success" [ngStyle]="{'width':vPorcentajeLiquidado+'%'}" ></div>
+                  </div>
+                </div>
+
+                <div class="progress-group">
+                  Créditos Pendientes
+                  <span class="float-right"><b>{{listarInfoGeneral[0].T_CRE_PEN}}</b>/{{listarInfoGeneral[0].T_CRE}}</span>
+                  <div class="progress progress-sm">
+                    <div class="progress-bar bg-danger" [ngStyle]="{'width':vPorcentajePendiente+'%'}"></div>
+                  </div>
+                </div>
+
+                <div class="progress-group">
+                  Créditos Anulados
+                  <span class="float-right"><b>{{listarInfoGeneral[0].T_CRE_ANU}}</b>/{{listarInfoGeneral[0].T_CRE}}</span>
+                  <div class="progress progress-sm">
+                    <div class="progress-bar bg-warning" [ngStyle]="{'width':vPorcentakeAnulado+'%'}" style="background-color: #2e34f3 !important"></div>
+                  </div>
+                </div>
+
+                <div class="progress-group">
+                  Créditos Refinanciados
+                  <span class="float-right"><b>{{listarInfoGeneral[0].T_CRE_REFI}}</b>/{{listarInfoGeneral[0].T_CRE}}</span>
+                  <div class="progress progress-sm">
+                    <div class="progress-bar bg-primary" [ngStyle]="{'width': vPorcentajeRefinanciado+'%'}" style="background-color: #0fcaf5 !important"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-3 col-6">
+                <div class="description-block border-right" data-toggle="modal" data-target="#mListaCreditosDashboard" (click)="onClickListarCreditosModal(3)">
+                  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> {{vPorcentajeLiquidado}} %</span>
+                  <h5 class="description-header">S/ {{listarInfoGeneral[0].T_MONT_CRE_LIQUI}}</h5>
+                  <span class="description-text">TOTAL LIQUIDADO</span>
+                </div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="description-block" data-toggle="modal" data-target="#mListaCreditosDashboard" (click)="onClickListarCreditosModal(1)">
+                  <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> {{vPorcentajePendiente}} %</span>
+                  <h5 class="description-header">S/ {{listarInfoGeneral[0].T_MONT_CRE_PEN}}</h5>
+                  <span class="description-text">TOTAL PENDIENTE</span>
+                </div>
+              </div>
+
+              <div class="col-sm-3 col-6" >
+                <div class="description-block border-right" data-toggle="modal" data-target="#mListaCreditosDashboard" (click)="onClickListarCreditosModal(2)">
+                  <span class="description-percentage text-warning" style="color: #2e34f3 !important;"><i class="fas fa-caret-left"></i> {{vPorcentakeAnulado}} %</span>
+                  <h5 class="description-header">S/ {{listarInfoGeneral[0].T_MONT_CRE_ANU}}</h5>
+                  <span class="description-text">TOTAL ANULADO</span>
+                </div>
+              </div>
+
+              <div class="col-sm-3 col-6" >
+                <div class="description-block border-right" data-toggle="modal" data-target="#mListaCreditosDashboard" (click)="onClickListarCreditosModal(4)"> 
+                  <span class="description-percentage text-success" style="color: #0fcaf5 !important;"><i class="fas fa-caret-up"></i> {{vPorcentajeRefinanciado}} %</span>
+                  <h5 class="description-header">S/ {{listarInfoGeneral[0].T_MONT_CRE_REFI}}</h5>
+                  <span class="description-text">TOTAL REFINANCIADO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header border-transparent">
+            <h3 class="card-title colorTituloVentana">Lista de Créditos Vencidos o por Vencer</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <table id="dtListaCreditosVencidos" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Crédito ID</th>
+                  <th>Cliente</th>
+                  <th>Vencimiento</th>
+                  <th>Estado</th>
+                  <th>Crédito</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let creven of listarCreditosVencidos let i = index">
+                  <td>CRE-{{creven.COD_CRE}}</td>
+                  <td>{{creven.CLI}} <span style="margin-right: 4px;" class="badge badge-secondary" *ngIf="creven.NOT != ''">{{creven.NOT}} </span> <span class="badge badge-info" *ngIf="creven.CLI_MOR != ''">{{creven.CLI_MOR}} </span></td>
+                  <td>
+                    <div *ngIf="creven.V_HOY===1; else elseBlock">
+                      <span >{{creven.FI}}</span> - <span style="color: #fbbd02; font-weight: bold">{{creven.FF}}</span>
+                    </div>
+                    <ng-template #elseBlock>
+                      {{creven.FI}} - {{creven.FF}}
+                    </ng-template>
+                    
+                  </td>
+                  <td>
+                    <div *ngIf="creven.ESTADO==='VENCIÓ'; else elseBlockEstado">
+                      <span class="badge badge-danger">{{creven.ESTADO}}</span>
+                    </div>
+                    <ng-template #elseBlockEstado>
+                      <span class="badge badge-warning">{{creven.ESTADO}}</span>
+                    </ng-template>
+                  </td>
+                  <td>
+                    <small class="text-info mr-1">
+                      <i class="far fa-money-bill-alt"></i>
+                    </small>
+                    {{creven.MONT_CRE}}
+                  </td>
+                  <td>
+                    <small class="text-danger mr-1">
+                      <i class="fas fa-arrow-down"></i>
+                    </small>
+                    {{creven.MONP}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer clearfix">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-listadocreditos></app-listadocreditos>

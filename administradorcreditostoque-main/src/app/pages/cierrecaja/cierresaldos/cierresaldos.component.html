@@ -1,0 +1,393 @@
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" *ngIf="listcierrecajasaldos.length > 0">
+                <div class="card">
+                    <div class="card-header">
+                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].ACC == 1" [ngIfElse]="MorososCC">
+                            <h3 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+                                {{listcierrecajasaldos[0].JSON_CONFIG[0].TI}}
+                            </h3>
+                        </ng-template>
+                        <ng-template #MorososCC>
+                            <h3 class="card-title colorTituloVentana" style="font-weight: bold; font-size: 17px;">
+                                MOROSOS: {{listcierrecajasaldos[0].JSON_CONFIG[0].TI}}
+                            </h3>
+                        </ng-template>
+                        
+                        <input id="txtMesCierreCaja" name="txtMesCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].MES">
+                        <input id="txtAnioCierreCaja" name="txtAnioCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].YEAR">
+                        <input id="txtFechaIniCierreCaja" name="txtFechaIniCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].FI">
+                        <input id="txtFechaFinCierreCaja" name="txtFechaFinCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].FF">
+                        <input id="txtAccionCierreCaja" name="txtAccionCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].ACC">
+                        <input id="txtFlagSemanaCierreCaja" name="txtFlagSemanaCierreCaja" type="hidden"
+                            [value]="listcierrecajasaldos[0].JSON_CONFIG[0].FLAG_IN">
+
+                        <i class="fas fa-search" style="margin-left: 12px" data-toggle="modal"
+                            data-target="#mBuscarCierresCajas"></i>
+                        <span style="margin-left: 12px"></span>
+                        <span class="badge badge-success classSemanasAnteriores" style="margin-left: 5px"
+                            *ngFor="let cuante of listcierrecajasaldos[0].JSON_LISTACO_ANT" 
+                            (click)="onClickBuscarCierreCajaAccesoDirecto(cuante.ACC,cuante.FI,cuante.FF)">{{cuante.SEM}}</span>
+
+                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].CC == 0" [ngIfElse]="CerradoCC">
+                            <h3 class="card-title colorTituloVentana float-right"
+                                style="font-weight: bold; font-size: 17px; color: red;">
+                                ABIERTO
+                            </h3>
+                        </ng-template>
+                        <ng-template #CerradoCC>
+                            <h3 class="card-title colorTituloVentana float-right"
+                                style="font-weight: bold; font-size: 17px; color: green;">
+                                CERRADO
+                            </h3>
+                        </ng-template>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive" id="divbodycierrecaja">
+                        <table id="tCierreCajaSaldos" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead style="font-size: 12px;">
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Tip. Cred.</th>
+                                    <th>F. Ent.</th>
+                                    <th>F. Venc</th>
+                                    <th class="classCentrarfinal">Monto Cred.</th>
+
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].FLAG_IN == 0" [ngIfElse]="flagsemana">
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S1 != null && listcierrecajasaldos[0].JSON_SUM[0].S1 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 1
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S2 != null && listcierrecajasaldos[0].JSON_SUM[0].S2 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 2
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S3 != null && listcierrecajasaldos[0].JSON_SUM[0].S3 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 3
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S4 != null && listcierrecajasaldos[0].JSON_SUM[0].S4 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 4
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S5 != null && listcierrecajasaldos[0].JSON_SUM[0].S5 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 5
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S6 != null && listcierrecajasaldos[0].JSON_SUM[0].S6 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 6
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S7 != null && listcierrecajasaldos[0].JSON_SUM[0].S7 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 7
+                                            </th>
+                                        </ng-template>
+                                    </ng-template>
+                                    <ng-template #flagsemana>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S0 != null && listcierrecajasaldos[0].JSON_SUM[0].S0 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 1
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S1 != null && listcierrecajasaldos[0].JSON_SUM[0].S1 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 2
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S2 != null && listcierrecajasaldos[0].JSON_SUM[0].S2 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 3
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S3 != null && listcierrecajasaldos[0].JSON_SUM[0].S3 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 4
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S4 != null && listcierrecajasaldos[0].JSON_SUM[0].S4 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 5
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S5 != null && listcierrecajasaldos[0].JSON_SUM[0].S5 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 6
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S6 != null && listcierrecajasaldos[0].JSON_SUM[0].S6 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 7
+                                            </th>
+                                        </ng-template>
+                                        <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S7 != null && listcierrecajasaldos[0].JSON_SUM[0].S7 != 0">
+                                            <th class="classCentrarfinal">
+                                                S - 8
+                                            </th>
+                                        </ng-template>
+                                    </ng-template>
+
+                                    <th class="classCentrarfinal">Total</th>
+                                    <th class="classCentrarfinal">Saldo</th>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].ACC == 1">
+                                        <th class="classCentrarfinal">Sal. Ref.</th>
+                                    </ng-template>
+                                    
+                                    <th>Estado</th>
+
+                                </tr>
+
+                            </thead>
+                            <tbody style="font-size: 12px;">
+
+                                <tr *ngFor="let cierrecajabody of listcierrecajasaldos[0].JSON_CREDITOS let i = index">
+                                    <td class="">
+                                        {{cierrecajabody.CLI}}
+                                        <span>({{cierrecajabody.MONT_CUO}})</span><br />
+                                        <span style="font-style: italic; color: #e76407; font-weight: 600;">
+                                            {{cierrecajabody.NOTA}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{cierrecajabody.TIP_DCRE}}
+                                    </td>
+                                    <td>
+                                        {{cierrecajabody.FEE}}
+                                    </td>
+                                    <td>
+                                        {{cierrecajabody.FEV}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold">
+                                        {{cierrecajabody.MONTO_CRE}}
+                                    </td>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S0 != null && listcierrecajasaldos[0].JSON_SUM[0].S0 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S0 != null" [ngIfElse]="montos0">
+                                                {{cierrecajabody.S0}}
+                                            </ng-template>
+                                            <ng-template #montos0>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S1 != null && listcierrecajasaldos[0].JSON_SUM[0].S1 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S1 != null" [ngIfElse]="montos1">
+                                                {{cierrecajabody.S1}}
+                                            </ng-template>
+                                            <ng-template #montos1>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S2 != null && listcierrecajasaldos[0].JSON_SUM[0].S2 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S2 != null" [ngIfElse]="montos2">
+                                                {{cierrecajabody.S2}}
+                                            </ng-template>
+                                            <ng-template #montos2>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S3 != null && listcierrecajasaldos[0].JSON_SUM[0].S3 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S3 != null" [ngIfElse]="montos3">
+                                                {{cierrecajabody.S3}}
+                                            </ng-template>
+                                            <ng-template #montos3>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S4 != null && listcierrecajasaldos[0].JSON_SUM[0].S4 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S4 != null" [ngIfElse]="montos4">
+                                                {{cierrecajabody.S4}}
+                                            </ng-template>
+                                            <ng-template #montos4>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S5 != null && listcierrecajasaldos[0].JSON_SUM[0].S5 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S5 != null" [ngIfElse]="montos5">
+                                                {{cierrecajabody.S5}}
+                                            </ng-template>
+                                            <ng-template #montos5>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S6 != null && listcierrecajasaldos[0].JSON_SUM[0].S6 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S6 != null" [ngIfElse]="montos6">
+                                                {{cierrecajabody.S6}}
+                                            </ng-template>
+                                            <ng-template #montos6>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S7 != null && listcierrecajasaldos[0].JSON_SUM[0].S7 != 0">
+                                        <td class="classCentrarfinal classColorBlue">
+                                            <ng-template [ngIf]="cierrecajabody.S7 != null" [ngIfElse]="montos7">
+                                                {{cierrecajabody.S7}}
+                                            </ng-template>
+                                            <ng-template #montos7>
+                                                --
+                                            </ng-template>
+                                        </td>
+                                    </ng-template>
+                                    <td class="classCentrarfinal fontBold">
+                                        {{cierrecajabody.SUM_SE}}
+                                    </td>
+                                    <td class="classCentrarfinal fontBold">
+                                        {{cierrecajabody.SALDO}}
+                                    </td>
+                                    
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].ACC == 1">
+                                        <td class="classCentrarfinal fontBold">
+                                            {{cierrecajabody.SAL_REF}}
+                                        </td>
+                                    </ng-template>
+                                    <td class="fontBold">
+
+                                        <ng-template [ngIf]="cierrecajabody.ESTADO == 'Liquidado'">
+                                            <span class="c16A04A"> {{cierrecajabody.ESTADO}}</span>
+                                        </ng-template>
+                                        <ng-template [ngIf]="cierrecajabody.ESTADO == 'Refinanciado'">
+                                            <span class="c0BDDE7"> {{cierrecajabody.ESTADO}}</span>
+                                        </ng-template>
+                                        <ng-template [ngIf]="cierrecajabody.ESTADO == 'Pendiente'">
+                                            <span class="F0270B"> {{cierrecajabody.ESTADO}}</span>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="font-size: 12px;">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="classCentrarfinal">{{vgSumTotalCreditosString}}</th>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S0 != null && listcierrecajasaldos[0].JSON_SUM[0].S0 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S0}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S1 != null && listcierrecajasaldos[0].JSON_SUM[0].S1 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S1}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S2 != null && listcierrecajasaldos[0].JSON_SUM[0].S2 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S2}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S3 != null && listcierrecajasaldos[0].JSON_SUM[0].S3 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S3}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S4 != null && listcierrecajasaldos[0].JSON_SUM[0].S4 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S4}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S5 != null && listcierrecajasaldos[0].JSON_SUM[0].S5 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S5}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S6 != null && listcierrecajasaldos[0].JSON_SUM[0].S6 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S6}}
+                                        </th>
+                                    </ng-template>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_SUM[0].S7 != null && listcierrecajasaldos[0].JSON_SUM[0].S7 != 0">
+                                        <th class="classCentrarfinal">
+                                            {{listcierrecajasaldos[0].JSON_SUM[0].S7}}
+                                        </th>
+                                    </ng-template>
+                                    <th class="classCentrarfinal">{{listcierrecajasaldos[0].JSON_SUM[0].SUM_SE}}</th>
+                                    <th class="classCentrarfinal">{{vgSumTotalSaldosString}}</th>
+                                    <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].ACC == 1">
+                                        <th class="classCentrarfinal">{{vgSumTotalSaldosRefString}}</th>
+                                    </ng-template>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer classFooterEstatico">
+                        <div style="width: 100%;">
+                            <button type="submit" class="btn btn-info" (click)="OnclickDescargarPDF()">Descargar Cierre</button>
+                            <ng-template [ngIf]="listcierrecajasaldos[0].JSON_CONFIG[0].CC == 0" >
+                                <button type="submit" class="btn btn-info float-right" (click)="onClickCerrarCierreCaja()">Cerrar Caja</button>
+                            </ng-template>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+<!-- /Modal Buscar Otros cuadernos de cobranza -->
+<div class="modal fade" id="mBuscarCierresCajas">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Consultar Cierres de Cajas</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModalCodigo>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span style="font-weight:bold">Seleccionar Año y Mes</span>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="month" class="form-control datetimepicker-input"
+                            id="dtFechaCierreCaja">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-default"
+                        (click)="onClickBuscarCierreModal()">Buscar</button>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+</section>
+<!-- /.content -->

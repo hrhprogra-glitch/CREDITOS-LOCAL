@@ -1,0 +1,351 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="titulomodulo">Nuevo Crédito</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Créditos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<!-- SELECT2 EXAMPLE -->
+<div class="card card-default">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">1</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Información del Cliente</h5>
+      </div>
+
+      <div class="col-md-2" >
+        <button type="button" class="btn btn-block btn-outline-secondary" data-toggle="modal"
+          data-target="#modal-xl">Buscar Cliente</button>
+      </div>
+      <div class="col-md-10" >
+        <div style="margin-top: 5px;">
+          <p>
+            <span style="font-weight:700;"> Código: </span> <span #spanCodigoClienteCre id="spanCodigoClienteCre"> -
+            </span>
+            <span style="font-weight:700;"> Nombres y Apellidos: </span> <span #spanNomrsClienteCre
+              id="spanNomrsClienteCre"> - </span>
+            <span style="font-weight:700;"> Dirección: </span> <span #spanDirClienteCre id="spanDirClienteCre"> -
+            </span>
+          </p>
+        </div>
+      </div>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">2</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Información del Crédito</h5>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Tipo de Pago</label>
+          <select class="form-control" id="cboTipoPago" #cboTipoPago (change)="SeleccionarTipoCretido($event)"
+            (ngModelChange)="SeleccionarTipoCretido($event)">
+            <option *ngFor="let tipocre of listarTipoCredito" [attr.data-dtc]="tipocre.DTC"
+              [attr.data-rds]="tipocre.RDS" [value]="tipocre.CTC">{{tipocre.DESCTC}}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="col-md-6" id="divDiaCobranza">
+        <div class="form-group">
+          <label>Día de Cobranza</label>
+          <select class="form-control" id="cboDiaCobranza" #cboDiaCobranza>
+            <option value="1">Lunes</option>
+            <option value="2">Martes</option>
+            <option value="3">Miercoles</option>
+            <option value="4">Jueves</option>
+            <option value="5">Viernes</option>
+            <option value="6">Sábado</option>
+            <option value="7">Domingo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Tipo Credito</label>
+          <select class="form-control" id="cbotipocreacion" #cbotipocreacion (change)="SeleccionarTipoCreacion()" (ngModelChange)="SeleccionarTipoCreacion()">
+            <option value="1">Nuevo Crédito</option>
+            <option value="2">Refinanciado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6" id="divCodigocreditoref">
+        <div class="form-group">
+          <label>Código crédito Ref</label>
+          <input type="number" min="0" class="form-control" id="txtCodigocreditoref"
+            placeholder="Ingrese código crédito ref">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Inicio Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaInicioPago">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Término Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaFinPago">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Entrega Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaEntregaPago">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto Partial</label>
+          <input type="number" min="1" class="form-control classMontoParcial" id="txtMontoParcial"
+            placeholder="Ingrese monto del crédito">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto Utilidad</label>
+          <input type="number" min="1" class="form-control classMontoUtilidad" id="txtMontoUtilidad"
+            placeholder="Ingrese monto del crédito">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto del Crédito</label>
+          <input type="number" min="1" class="form-control classMontoCredito" id="txtMontoCredito"
+            placeholder="Ingrese monto del crédito">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Número de Cuotas </label>
+          <input type="number" min="1" class="form-control" id="txtNumCuota" placeholder="Ingrese número de cuota">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto de Cuota </label>
+          <input type="number" min="1" class="form-control" id="txtMontoPagoCuota" placeholder="Ingrese monto a pagar">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Notas (Observaciones) </label>
+          <input type="text" class="form-control" id="txtNotasCredito" placeholder="Ingrese Notas">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group" id="select2personalcobranza">
+          <label>Personal de Cobranza</label>
+          <select class="form-control select2" id="cboPersonalCobranza" multiple="multiple" data-placeholder="Seleccione Personal" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <option *ngFor="let personalCobranza of listarPersonalCobranza" [value]="personalCobranza.COD_PER">{{personalCobranza.NOM_PER}}</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <br />
+    
+
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">3</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Forma de Entrega</h5>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Tipo Entrega</label>
+          <select class="form-control" id="cbotipoentrega" #cbotipoentrega>
+            <option value="1">Efectivo</option>
+            <option value="2">Deposito</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Monto Entrega</label>
+          <input type="number" min="0" class="form-control" id="txtMontoentrega"
+            placeholder="Ingrese monto">
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Notas</label>
+          <input type="text" min="0" class="form-control" id="txtNotasentrega"
+            placeholder="Ingrese notas">
+        </div>
+      </div>
+
+      <div class="col-md-2">     
+        <div class="form-group">
+          <button type="button" class="btn btn-block btn-outline-secondary" style="margin-top: 30px;" id="btnAnadirtipoentrega">Añadir</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-10">
+        <table class="table table-bordered table-striped dataTable dtr-inline" id="dtTipoentregacredito">
+          <thead>
+            <tr>
+              <th>Tipo Entrega</th>
+              <th>Monto</th>
+              <th>Notas</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="dtTipoentregacreditobody">
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+
+    <!--<div class="row">
+        <div class="col-md-12">
+          <span class="float-left badge bg-danger tituloNumeroCredito">3</span><h5 class="tituloSeccionCredito">Detalle Cronograma de Pagos</h5>
+        </div>
+        <div class="col-md-6">
+          <table id="tListarCreditos" class="table table-bordered table-striped">
+            <thead>
+            <tr >
+              <th>Num. Cuota</th>
+              <th>Fecha de Pago</th>
+              <th>Monto Cuota + INT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cronopago of listaCronogramaPagos">
+              <td>{{cronopago.nro_Cuota}}</td>
+              <td><input type="date" class="form-control datetimepicker-input" [value]="cronopago.fechaPagos"></td>
+              <td>
+                S/ <span> {{cronopago.montoCuota}} </span> 
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div> -->
+    <!-- /.row -->
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer">
+    <button type="button" class="btn btn-default" routerLink="/pages/listarcredito">Cancelar</button>
+    <button type="button" class="btn btn-info float-right" (click)="onClickGrabarCredito(cboTipoPago)"
+      [disabled]="vBloquearBoton==true">Guardar</button>
+
+  </div>
+</div>
+<!-- /.card -->
+
+<!-- MODAL BUSCAR CLIENTE -->
+
+<div class="modal fade" id="modal-xl">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Listado de Clientes</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #cerrarModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            Criterios de Búsqueda
+          </div>
+          
+          <div class="col-md-2">
+            <div class="form-group">
+              <input type="text" class="form-control" id="txtCodigoClienteBuscarCre" placeholder="Código: ejemplo 12"
+                #txtCodigoClienteBuscar>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <input type="text" class="form-control" id="txtDocumentoBuscarCre" placeholder="Dod Cli: 70339030"
+                #txtDocumentoBuscar>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              <input type="text" class="form-control" id="txtNomRazonSoBuscarCre"
+                placeholder="Nombres o Apellidos - Razón Social: Silvia Huarcaya Misajel" #txtNomRazonSoBuscar>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-info"
+              (click)="OnClickBuscarListarClienteCre(txtCodigoClienteBuscar.value,txtDocumentoBuscar.value,txtNomRazonSoBuscar.value)">BUSCAR</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column"
+            *ngFor="let cleinteAval of listarClienteCredito">
+            <div class="card bg-light d-flex flex-fill">
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b>{{cleinteAval.NARSC}}</b></h2>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Dirección:
+                        {{cleinteAval.DIRC}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfonos:
+                        {{cleinteAval.TELC}}</li>
+                    </ul>
+                  </div>
+                  <div class="col-5 text-center">
+                    <br />
+                    <img src="./assets/imagenes/user.svg" alt="user-avatar" class="img-circle img-fluid"
+                      style="width: 80px;">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="text-right">
+                  <a class="btn btn-sm btn-primary" [attr.data-codcli]="cleinteAval.CODC"
+                    [attr.data-nomrs]="cleinteAval.NARSC" [attr.data-dirc]="cleinteAval.DIRC"
+                    (click)="SeleccionarClienteCredito($event)">
+                    <i class="fas fa-user"></i> Seleccionar
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="modal-footer justify-content-between">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

@@ -1,0 +1,527 @@
+.classMontoUtilidad{
+    background-color: #B1FBD9;
+}
+.classMontoParcial{
+    background-color: #FEF09D;
+}
+.classMontoCredito{
+    background-color: #9DD2FE;
+}
+.classcolorMenu{
+    background-color: #3B5376 !important;
+    height: 100% !important;
+}
+.clasColorlinea{
+    border-bottom: 1px solid #acb4bb !important;
+}
+.classTextAlingRigth{
+    text-align: right;
+}
+.colorTituloVentana{
+    color: #1753a0;
+    font-weight: bold;
+    font-size: 20px;
+}
+.fontBold{
+    font-weight: bold;
+}
+.textAlingRigth{
+    text-align: right;;
+}
+.classCentrarfinal{
+    text-align: center !important;
+}
+.textAlingLeft{
+    text-align: left !important;
+}
+.textAlingRight{
+    text-align: right !important;
+}
+.classWidthDiv800{
+    width: 800px;
+}
+.classWidthDiv1400{
+    width: 1400px;
+}
+.classTamanioIcono{
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+.paddingButtom{
+    padding-top: 16px
+}
+#tdListadoCobranzaTwo td{
+    padding: 0.20rem;
+}
+
+#tCuadernoCobranzaCobrador td{
+    padding: 0.20rem;
+}
+
+#tCierreCajaSaldos td{
+    padding: 0.20rem;
+}
+
+#tCierreCajaUtilidad td{
+    padding: 0.20rem;
+}
+#tCierreCajaUtilidadNeta td{
+    padding: 0.20rem;
+}
+.BorderTable{
+    border: 1px solid white !important;
+}
+
+.f42ef7{
+    color: #f42ef7;
+}
+.c16A04A{
+    color: #16A04A;
+}
+.CB0CD7{
+    color: #CB0CD7;
+}
+.F56319{
+    color: #F56319;
+}
+.F0270B{
+    color: #F0270B;
+}
+.c0BDDE7{
+    color: #0BDDE7;
+}
+.montoCuota{
+    color: black;
+}
+.classColorBlue{
+    color: blue;
+}
+
+#select2personalcobranzaupd span{
+    color: #1753a0 !important;
+}
+
+#select2personalcobranza span{
+    color: #1753a0 !important;
+}
+.classTamanioButton{
+    width: 92px;
+    height: 35px;
+    cursor: pointer;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.classColorPersonal1{
+    background-color: #a7d7cd;
+    border-color: #85bfb3;
+    color: black;
+}
+.classColorPersonal2{
+    background-color: #efd9b5;
+    border-color: #d9b986;
+    color: black;
+}
+.classSpanEstadoPen{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: red;
+    font-weight: 400;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    border-color: red;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+
+.classCreditoCliente{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    border-color: #83858b;
+    background-color: #83858b;
+    border-width: 1px;
+    border-style: solid;
+}
+.classPersonalHistorial{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #566cab;
+    background-color: #566cab;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.classClienteNoataHistorial{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #7986ab;
+    background-color: #7986ab;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.classCuadernoAbierto{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #4e8d59;
+    background-color: #4e8d59;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.classCuadernoCerrado{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #ad3843;
+    background-color: #ad3843;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.classMontoHistorial{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #41bb6a;
+    background-color: #41bb6a;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.classFechaEntregaHistorial{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #6f7585;
+    background-color: #6f7585;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.classVencimientogaHistorial{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    border-color: #7c9199;
+    background-color: #7c9199;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+.classSpanEstadoLiqui{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: green;
+    font-weight: 400;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    border-color: green;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+
+.classSpanEstadoRefinanciado{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: #0fcaf5;
+    font-weight: 400;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    border-color: #0fcaf5;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+.classSpanEstadoAnu{
+    padding: 4px 10px;
+    line-height: 13px;
+    color: #2e34f3;
+    font-weight: 400;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    border-color: #2e34f3;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+.ColorCardCredito{
+    background-color: #acbbbd !important;
+}
+.letraNegrita{
+    font-weight: bold;
+}
+.tituloSeccionCredito{
+    font-size: 20px;
+    font-weight: bold;
+    color: #7494c3;
+}
+.tituloNumeroCredito{
+    font-size: 18px;
+    background-color: #7494c3 !important;
+}
+
+.sinone{
+display: block;
+}
+
+.nonone{
+    display: none;
+    }
+.classFooterEstatico{
+    z-index: 999999;
+    position: sticky;
+    bottom: 0;
+    background-color: #e8ebef;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+}
+.classDiaCobro{
+    background-color: #c4f56f;
+}
+.ClassDiaVencimientoCobro{
+    border: #53b8bb  5px solid !important;
+}
+
+.classSemanasAnteriores{
+    background-color: #49709d;
+    cursor: pointer;
+    margin-left: 5px
+}
+
+.classSemanaActual{
+    background-color: #178d3e;
+    cursor: pointer;
+    margin-left: 12px
+}
+
+ body::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+body::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+body::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+body::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+body::-webkit-scrollbar-track:hover,
+body::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+
+
+.modal::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.modal::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.modal::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.modal::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+.modal::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+.modal::-webkit-scrollbar-track:hover,
+.modal::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+
+
+
+
+
+
+
+
+.divscroll::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.divscroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.divscroll::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.divscroll::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+.divscroll::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+.divscroll::-webkit-scrollbar-track:hover,
+.divscroll::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+.titulomodulo{
+    color: #3B5376;
+    font-weight: 600;
+}
+
+.font-weight500{
+    font-weight: 500 !important
+}
+
+.bgefectivo{
+    color: black;
+    background-color: white;
+    border-color: green;
+    border-width: 1px;
+    border-style: solid
+}
+
+.bgdeposito{
+    color: black;
+    background-color: white;
+    border-color: #ffc107;
+    border-width: 1px;
+    border-style: solid
+}

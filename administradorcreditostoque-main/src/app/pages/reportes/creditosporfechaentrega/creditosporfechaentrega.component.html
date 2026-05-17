@@ -1,0 +1,256 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="titulomodulo">Reporte de Créditos por Fecha de Entrega</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Créditos</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-1 classTextAlingRigth" style="margin-top: 5px">
+                                <span style="font-weight:bold">Rango de fechas:</span>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="date" class="form-control datetimepicker-input" id="dtFechaIniCreditosfe"
+                                    #dtFechaIniCreditosfe>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="date" class="form-control datetimepicker-input" id="dtFechaFinCreditosfe"
+                                    #dtFechaFinCreditosfe>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-info"
+                                    (click)="onclickBuscarcreditosporrangofecha(dtFechaIniCreditosfe.value, dtFechaFinCreditosfe.value)">BUSCAR</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+                        <span style="font-size: 18px;font-weight: 900; color: #3B5376;">1.- Creditos Según Forma de Entrega</span>
+                        <table class="table table-bordered table-striped dataTable dtr-inline" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                            <thead>
+                                <tr>
+                                    <th>Crédito</th>
+                                    <th>Cliente</th>
+                                    <th>F.E</th>
+                                    <th>F.V</th>
+                                    <th class="textAlingRight">Monto T. Entrega</th>
+                                    <th class="textAlingLeft">Forma de Entrega</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-template ngFor let-i="index" let-ul="last" let-credito
+                                    [ngForOf]="listaCreditossegunformaentrega">
+
+                                    <ng-template [ngIf]="credito.TIPO == 1">
+                                        <tr>
+                                            <td>{{credito.COD_CRE}}</td>
+                                            <td>{{credito.CLI}}</td>
+                                            <td>{{credito.FEC}}</td>
+                                            <td>{{credito.FEV}}</td>
+                                            <td class="textAlingRight">{{credito.MONC}}</td>
+                                            {{parseJson(credito.JSON_ENTREGA)}}
+                                            <td class="textAlingLeft">
+                                                <ng-template ngFor let-item [ngForOf]="vgDetalleFe">
+                                                    <ng-template [ngIf]="item.COD_E == 1">
+                                                        <span class="badge bgefectivo">
+                                                            <img src="./assets/imagenes/dinero-en-efectivon.png"
+                                                                style="width: 20px; height: 20px;"> &nbsp; {{item.DESC_E}}
+                                                        </span>
+                                                        <span style="font-weight: 600;">&nbsp;S/. &nbsp;&nbsp;{{item.MON_E}}
+                                                            &nbsp;</span>
+                                                        <span style="font-style: italic;">{{item.NO}}</span> <br>
+                                                    </ng-template>
+    
+                                                    <ng-template [ngIf]="item.COD_E == 2">
+                                                        <span class="badge bgdeposito">
+                                                            <img src="./assets/imagenes/transferencia-de-dinero.png"
+                                                                style="width: 20px; height: 20px;"> &nbsp; {{item.DESC_E}}
+                                                        </span>
+                                                        <span style="font-weight: 600;">&nbsp;S/. &nbsp;&nbsp;{{item.MON_E}}
+                                                            &nbsp;</span>
+                                                        <span style="font-style: italic;">{{item.NO}}</span> <br>
+                                                    </ng-template>
+    
+                                                    
+                                                </ng-template>
+    
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template [ngIf]="credito.TIPO == 2">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">SUB TOTAL</td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{credito.MONC}}</td>
+                                            {{parseJson(credito.JSON_ENTREGA)}}
+                                            <td class="textAlingLeft">
+                                                <ng-template ngFor let-item [ngForOf]="vgDetalleFe">
+                                                    <ng-template [ngIf]="item.COD_E == 1">
+                                                        <span class="badge badge-success">
+                                                            <img src="./assets/imagenes/dinero-en-efectivo.png"
+                                                                style="width: 20px; height: 20px;"> &nbsp; {{item.DESC_E}}
+                                                        </span>
+                                                        <span style="font-weight: 600; color: #1c67ef">&nbsp;S/. &nbsp;&nbsp;{{item.MON_E}}
+                                                            &nbsp;</span>
+                                                        
+                                                    </ng-template>
+    
+                                                    <ng-template [ngIf]="item.COD_E == 2">
+                                                        <span class="badge badge-warning">
+                                                            <img src="./assets/imagenes/transferencia-de-dinero.png"
+                                                                style="width: 20px; height: 20px;"> &nbsp; {{item.DESC_E}}
+                                                        </span>
+                                                        <span style="font-weight: 600; color: #1c67ef">&nbsp;S/. &nbsp;&nbsp;{{item.MON_E}}
+                                                            &nbsp;</span><br>
+                                                        
+                                                    </ng-template>
+                                                </ng-template>
+    
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+
+                                </ng-template>
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th style="font-weight: 600; color: #1c67ef" class="textAlingRight">{{vgTotal}}</th>
+                                    <th>
+                                        <ng-template ngFor let-itemst [ngForOf]="vgListToatles">
+                                            <ng-template [ngIf]="itemst.COD_ET == 1">
+                                                <span class="badge badge-success">
+                                                    <img src="./assets/imagenes/dinero-en-efectivo.png"
+                                                        style="width: 20px; height: 20px;"> &nbsp; {{itemst.DESC_ET}}
+                                                </span>
+                                                <span style="font-weight: 600; color: #1c67ef">&nbsp;S/. &nbsp;&nbsp;{{itemst.MON_ET}}
+                                                    &nbsp;</span>
+                                                
+                                            </ng-template>
+
+                                            <ng-template [ngIf]="itemst.COD_ET == 2">
+                                                <span class="badge badge-warning">
+                                                    <img src="./assets/imagenes/transferencia-de-dinero.png"
+                                                        style="width: 20px; height: 20px;"> &nbsp; {{itemst.DESC_ET}}
+                                                </span>
+                                                <span style="font-weight: 600; color: #1c67ef">&nbsp;S/. &nbsp;&nbsp;{{itemst.MON_ET}}
+                                                    &nbsp;</span><br>
+                                                
+                                            </ng-template>
+                                        </ng-template>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+
+                    <div class="card-body">
+                        <span style="font-size: 18px;font-weight: 900; color: #3B5376;">2. Creditos Refinanciados</span>
+                        <table class="table table-bordered table-striped dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th>Crédito</th>
+                                    <th>Cliente</th>
+                                    <th>F.E</th>
+                                    <th>F.V</th>
+                                    <th class="textAlingRight">Monto Par.</th>
+                                    <th class="textAlingRight">Monto Int.</th>
+                                    <th class="textAlingRight">Monto Tot.</th>
+                                    <th>Cred. Ori.</th>
+                                    <th class="textAlingRight">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <ng-template ngFor let-i="index" let-ul="last" let-refinanciado
+                                    [ngForOf]="listCreditoref">
+
+                                    <ng-template [ngIf]="refinanciado.TIPO == 1">
+                                        <tr>
+                                            <td>{{refinanciado.COD_CRE}}</td>
+                                            <td>{{refinanciado.CLI}}</td>
+                                            <td>{{refinanciado.FEC}}</td>
+                                            <td>{{refinanciado.FEV}}</td>
+                                            <td class="textAlingRight">{{refinanciado.MONP}}</td>
+                                            <td class="textAlingRight">{{refinanciado.MONI}}</td>
+                                            <td class="textAlingRight">{{refinanciado.MONT}}</td>
+                                            <td>{{refinanciado.COD_CREF}}</td>
+                                            <td class="textAlingRight">{{refinanciado.MONAS}}</td>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="refinanciado.TIPO == 2">
+                                        <tr>
+                                            <td style="color: #1c67ef; font-weight: bold; text-align: right;" colspan="4">SUB TOTAL</td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{refinanciado.MONP}}</td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{refinanciado.MONI}}</td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{refinanciado.MONT}}</td>
+                                            <td style="color: #1c67ef; font-weight: bold;">-</td>
+                                            <td style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{refinanciado.MONAS}}</td>
+                                        </tr>
+                                    </ng-template>
+
+                                </ng-template>
+                                
+
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr *ngIf="vgListToatlesref.length > 0">
+                                    <th colspan="4"></th>
+                                    <th style="color: #1c67ef; font-weight: bold;" class="textAlingRight" >{{vgListToatlesref[0].MONP}}</th>
+                                    <th style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{vgListToatlesref[0].MONI}}</th>
+                                    <th style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{vgListToatlesref[0].MONT}}</th>
+                                    <th></th>
+                                    <th style="color: #1c67ef; font-weight: bold;" class="textAlingRight">{{vgListToatlesref[0].MONAS}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <!-- /.card-body -->
+
+                    <div class="card-footer classFooterEstatico">
+                        <div style="width: 100%;">
+                            <button type="submit" class="btn btn-info" (click)="OnclickDescargarPDFreporte()">Descargar
+                                Reporte</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

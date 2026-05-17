@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CAT_ACCESO\CAT_ACCESO.csproj" />
+    <ProjectReference Include="..\CAT_MODELOS\CAT_MODELOS.csproj" />
+    <ProjectReference Include="..\CAT_UNITOFWORK\CAT_UNITOFWORK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="uploadfile\cliente\" />
+  </ItemGroup>
+
+</Project>

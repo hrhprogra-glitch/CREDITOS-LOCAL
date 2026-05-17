@@ -1,0 +1,259 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="titulomodulo">Actualizar Crédito - {{listarCreditosActualizar[0].CODC}}</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Créditos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<!-- SELECT2 EXAMPLE -->
+<div class="card card-default" *ngIf="listarCreditosActualizar.length > 0">
+  <h3 class="card-title nonone" id="h3CodigoCredito">{{listarCreditosActualizar[0].CODC}}</h3>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">1</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Información del Cliente</h5>
+      </div>
+      <div class="col-md-12">
+        <br>
+        <div>
+          <p>
+            <span style="font-weight:700;"> Código: </span> <span #spanCodigoClienteCre id="spanCodigoClienteCreUpd">
+              {{listarCreditosActualizar[0].CODCLI}} </span>
+            <span style="font-weight:700;"> Nombres y Apellidos: </span> <span #spanNomrsClienteCre
+              id="spanNomrsClienteCreUpd">{{listarCreditosActualizar[0].CLI}} </span>
+            <span style="font-weight:700;"> Dirección: </span> <span #spanDirClienteCre
+              id="spanDirClienteCreUpd">{{listarCreditosActualizar[0].DIR_CLI}} </span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">2</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Información del Crédito</h5>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Tipo de Pago</label>
+          <select class="form-control" id="cboTipoPagoUpd" #cboTipoPagoUpd (change)="SeleccionarTipoCretido($event)"
+            (ngModelChange)="SeleccionarTipoCretido($event)">
+            <option *ngFor="let tipocre of listarTipoCreditos" [attr.data-dtc]="tipocre.DTC"
+              [attr.data-rds]="tipocre.RDS" [value]="tipocre.CTC"
+              [selected]="tipocre.CTC == listarCreditosActualizar[0].COD_TC ">{{tipocre.DESCTC}}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="col-md-6" id="divDiaCobranzaUpd" *ngIf="listarCreditosActualizar[0].RD_CRE===1">
+        <div class="form-group">
+          <label>Día de Cobranza</label>
+          <select class="form-control" id="cboDiaCobranzaUpd" #cboDiaCobranzaUpd>
+            <option value="1" [selected]="listarCreditosActualizar[0].DC_CRE ===1">Lunes</option>
+            <option value="2" [selected]="listarCreditosActualizar[0].DC_CRE ===2">Martes</option>
+            <option value="3" [selected]="listarCreditosActualizar[0].DC_CRE ===3">Miercoles</option>
+            <option value="4" [selected]="listarCreditosActualizar[0].DC_CRE ===4">Jueves</option>
+            <option value="5" [selected]="listarCreditosActualizar[0].DC_CRE ===5">Viernes</option>
+            <option value="6" [selected]="listarCreditosActualizar[0].DC_CRE ===6">Sábado</option>
+            <option value="7" [selected]="listarCreditosActualizar[0].DC_CRE ===7">Domingo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Tipo Credito</label>
+          <select class="form-control" id="cbotipocreacionupd" #cbotipocreacionupd (change)="SeleccionarTipoCreacionupd()" (ngModelChange)="SeleccionarTipoCreacionupd()">
+            <option value="1" [selected]="listarCreditosActualizar[0].TCR ===1">Nuevo Crédito</option>
+            <option value="2" [selected]="listarCreditosActualizar[0].TCR ===2">Refinanciado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6" id="divCodigocreditorefupd" [class.nonone] = "listarCreditosActualizar[0].TCR===1">
+        <div class="form-group">
+          <label>Código crédito Ref</label>
+          <input type="number" min="0" class="form-control" id="txtCodigocreditorefupd"
+            placeholder="Ingrese código crédito ref" [value]="listarCreditosActualizar[0].COD_CRE_R">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Inicio Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaInicioPagoUpd"
+            [value]="listarCreditosActualizar[0].FIC">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Término Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaFinPagoUpd"
+            [value]="listarCreditosActualizar[0].FFC">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fecha de Entrega Crédito</label>
+          <input type="date" class="form-control datetimepicker-input" id="dtFechaEntregaPagoUpd"
+            [value]="listarCreditosActualizar[0].FEEN">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto Partial</label>
+          <input type="number" min="1" class="form-control classMontoParcial" id="txtMontoParcialUpd"
+            placeholder="Ingrese monto del crédito" [value]="listarCreditosActualizar[0].MPC">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto Utilidad</label>
+          <input type="number" min="1" class="form-control classMontoUtilidad" id="txtMontoUtilidadUpd"
+            placeholder="Ingrese monto del crédito" [value]="listarCreditosActualizar[0].MUC">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto del Crédito</label>
+          <input type="number" min="1" class="form-control classMontoCredito" id="txtMontoCreditoUpd"
+            placeholder="Ingrese monto del crédito" [value]="listarCreditosActualizar[0].MONC">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Número de Cuotas </label>
+          <input type="number" min="1" class="form-control" id="txtNumCuotaUpd" placeholder="Ingrese número de cuota"
+            [value]="listarCreditosActualizar[0].NUMC">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Monto de Cuota </label>
+          <input type="number" min="1" class="form-control" id="txtMontoPagoCuotaUpd"
+            placeholder="Ingrese monto a pagar" [value]="listarCreditosActualizar[0].MONCU">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Notas (Observaciones) </label>
+          <input type="text" class="form-control" id="txtNotasCreditoUpd" placeholder="Ingrese Notas"
+            [value]="listarCreditosActualizar[0].NOTA">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group" id="select2personalcobranzaupd">
+          <label>Personal de Cobranza</label>
+          <select class="form-control select2" id="cboPersonalCobranzaupd" multiple="multiple"
+            data-placeholder="Seleccione Personal" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <option *ngFor="let personalCobranza of listarPersonalCobranzaupd" [value]="personalCobranza.COD_PC"
+              [selected]="personalCobranza.SELECTED ===1">
+              {{personalCobranza.NOM_PC}}</option>
+          </select>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <span class="float-left badge bg-danger tituloNumeroCredito">3</span>
+        <h5 class="tituloSeccionCredito">&nbsp; Forma de Entrega</h5>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Tipo Entrega</label>
+          <select class="form-control" id="cbotipoentregaupd" #cbotipoentregaupd>
+            <option value="1">Efectivo</option>
+            <option value="2">Deposito</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Monto Entrega</label>
+          <input type="number" min="0" class="form-control" id="txtMontoentregaupd" #txtMontoentregaupd
+            placeholder="Ingrese monto">
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Notas</label>
+          <input type="text" min="0" class="form-control" id="txtNotasentregaupd" #txtNotasentregaupd
+            placeholder="Ingrese notas">
+        </div>
+      </div>
+
+      <div class="col-md-2">     
+        <div class="form-group">
+          <button type="button" class="btn btn-block btn-outline-secondary" style="margin-top: 30px;" id="btnAnadirtipoentrega" (click)="onClickGuardarFormaentrega(listarCreditosActualizar[0].CODC, cbotipoentregaupd.value, txtMontoentregaupd.value, txtNotasentregaupd.value)">GUARDAR</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-10">
+        <table class="table table-bordered table-striped dataTable dtr-inline" id="dtTipoentregacredito">
+          <thead>
+            <tr>
+              <th>Tipo Entrega</th>
+              <th>Monto</th>
+              <th>Notas</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let formaen of listarFormaEntrega">
+              <td>{{formaen.DESC_TE}}</td>
+              <td>{{formaen.MON_ENT}}</td>
+              <td>{{formaen.NOT_ENT}}</td>
+              <td><img src="./assets/imagenes/eliminar.png" class="classTamanioIcono" (click)="onClickformapagoEliminar(formaen.COD_CRE, formaen.COD_CRE_E)"></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer">
+    <button type="button" class="btn btn-default" routerLink="/pages/listarcredito">Cancelar</button>   
+    <ng-template [ngIf]="listarCreditosActualizar[0].EST_CRE == 1">
+      <button type="button" class="btn btn-info float-right" (click)="onActualizarCredito(cboTipoPagoUpd)"
+      [disabled]="vBloquearBoton==true">Actualizar</button>
+      <button type="button" style="margin-right: 8px" class="btn btn-info float-right"
+      (click)="onClickRefinanciarCredito(listarCreditosActualizar[0].CODC)"
+      [disabled]="vBloquearBoton==true">Refinanciar</button>
+      <button type="button" style="margin-right: 8px" class="btn btn-info float-right"
+        (click)="onClickActualizarListadoCobranzaCredito(listarCreditosActualizar[0].CODC)"
+        [disabled]="vBloquearBoton==true">Actualizar Listado Cobranzas</button>
+        <button type="button" style="margin-right: 8px" class="btn btn-info float-right"
+        (click)="onClickActualizarSaldosCobranzaCredito(listarCreditosActualizar[0].CODC)"
+        [disabled]="vBloquearBoton==true">Actualizar Saldos</button>
+    </ng-template>
+
+  </div>
+</div>
+<!-- /.card -->
